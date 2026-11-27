@@ -74,18 +74,15 @@
 <div class="section-head"><h3>الباقات المتاحة</h3></div>
 <div id="subscriptionPlans" class="grid"><div class="empty">جارٍ تحميل الباقات بعد تسجيل الدخول...</div></div>
 <div class="card">
-<h3>تجربة مجانية للمميزات المدفوعة</h3>
-<p class="muted">يمكن لمالك المنشأة أو مديرها بدء تجربة لمدة 14 يومًا مرة واحدة لكل منشأة. لا يتم خصم أي مبلغ عند بدء التجربة، ولا يتم تفعيل التجديد التلقائي.</p>
-<div class="formgrid">
-<div class="field"><label>اختر باقة التجربة</label><select id="trialPlanSelect"><option value="workshop">ورشة صغيرة</option><option value="company">شركة</option><option value="business_plus">شركة متقدمة</option></select></div>
-<div class="field" style="align-self:end"><button type="button" id="startTrialBtn">ابدأ التجربة المجانية</button></div>
-</div>
-<div id="trialStatus" class="muted"></div>
+<h3>سياسة الاشتراك المعتمدة</h3>
+<p class="muted">الحساب المجاني متاح لكل من أصحاب الطلبات ومقدمي الخدمات، دون تمييز حسب نوع النشاط.</p>
+<p class="muted">الباقات المدفوعة شهرية لمدة 30 يومًا. التجديد يدوي افتراضيًا، ويمكن للعميل تفعيل التجديد التلقائي بموافقته الصريحة.</p>
+<p class="muted">بعد انتهاء الاشتراك توجد مهلة سماح 7 أيام، ثم تعود المنشأة إلى حدود الباقة المجانية مع الاحتفاظ ببياناتها.</p>
 </div>
 <div class="notice">الدفع الإلكتروني والتجديد التلقائي غير مفعّلين بعد. لن نطلب منك إدخال بيانات بطاقة أو تحويل أموال من هذه الشاشة قبل ربط بوابة دفع والتحقق الآمن من الدفع.</div>
 </section>
-<section class="page" id="settings"><div class="section-head"><h2>إعدادات المنصة</h2></div><div class="card"><h3>حالة الاتصال</h3><p><span class="pill tag-red">قاعدة البيانات السحابية غير مفعلة داخل الواجهة بعد</span></p><p class="muted">المشروع يحتوي على مخطط قاعدة بيانات Supabase داخل مجلد supabase، لكن هذه النسخة لا ترسل بيانات إلى السحابة. يلزم إعداد عنوان المشروع ومفتاح anon العام بعد التأكد من تشغيل الجداول وسياسات الحماية.</p><h3>قنوات التواصل</h3><p class="muted">واتساب هو قناة التواصل الأساسية المخطط لها. لم يتم توصيل WhatsApp Business Cloud API أو تشغيل رسائل آلية في هذه النسخة.</p><h3>حماية البيانات</h3><p class="muted">لا تدخل بيانات عملاء حقيقية أو حساسة في النسخة التجريبية؛ بياناتها محفوظة محليًا في متصفح هذا الجهاز فقط.</p></div></section>
-<div class="notice">تنبيه: هذه نسخة MVP واجهة تشغيل تجريبية. التسجيل والطلبات والعروض تُحفظ محليًا في هذا المتصفح فقط، وليست قاعدة بيانات مشتركة بعد. لا توجد حتى الآن مصادقة حقيقية أو ربط واتساب أو إرسال إشعارات.</div>
+<section class="page" id="settings"><div class="section-head"><h2>إعدادات المنصة</h2></div><div class="card"><h3>حالة الاتصال</h3><p><span class="pill">اتصال Supabase مضاف</span></p><p class="muted">تسجيل الهاتف وإدارة ملفات الأنشطة وقراءة بيانات الاشتراكات تستخدم اتصال Supabase. نماذج الطلبات والعروض المحلية ما زالت في مرحلة النقل إلى قاعدة البيانات المشتركة.</p><h3>قنوات التواصل</h3><p class="muted">واتساب هو قناة التواصل الأساسية المخطط لها. لم يتم توصيل WhatsApp Business Cloud API أو تشغيل رسائل آلية في هذه النسخة.</p><h3>حماية البيانات</h3><p class="muted">لا تدخل بيانات عملاء حقيقية أو حساسة في النسخة التجريبية؛ بياناتها محفوظة محليًا في متصفح هذا الجهاز فقط.</p></div></section>
+<div class="notice">تنبيه: تسجيل الدخول وملفات الأنشطة والاشتراكات متصلة بـ Supabase. بعض نماذج الطلبات والعروض ما زالت تجريبية ومحلية. لم يتم توصيل WhatsApp Business API أو بوابة الدفع بعد.</div>
 </div><div class="footer">© منصة المعارف — تطوير تدريجي، مع موافقة بشرية على العروض والالتزامات.</div></main></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -118,20 +115,10 @@ async function loadSelectedSubscription(){
   subscriptionMessage('#subscriptionStatus','جارٍ فحص الاشتراك...');
   const {data,error}=await cloud.rpc('get_organization_subscription_access',{p_organization_id:orgId});
   if(error){subscriptionMessage('#subscriptionStatus','تعذر فحص الاشتراك: '+error.message+' — تأكد من تشغيل subscriptions.sql.',true);return;}
-  const labels={free:'مجاني',trialing:'تجربة مجانية',active:'نشط ومدفوع',grace:'فترة السماح',expired:'منتهي'};
+  const labels={free:'مجاني',trialing:'حالة تجريبية قديمة',active:'نشط ومدفوع',grace:'فترة السماح',expired:'عاد إلى المجاني'};
   subscriptionMessage('#subscriptionStatus','حالة الاشتراك: '+(labels[data.status]||data.status));
   const end=data.period_end||data.access_until||null;
   $('#subscriptionPlanDetails').textContent='الباقة الحالية: '+(data.plan_name||'مجاني')+(end?' — نهاية الفترة: '+new Date(end).toLocaleDateString('ar-EG'):'')+(data.grace_until?' — نهاية السماح: '+new Date(data.grace_until).toLocaleDateString('ar-EG'):'');
-}
-async function startOrganizationTrial(){
-  const orgId=$('#subscriptionOrgSelect').value, planCode=$('#trialPlanSelect').value;
-  if(!cloudUser){subscriptionMessage('#trialStatus','سجّل الدخول أولًا.',true);return;}
-  if(!orgId){subscriptionMessage('#trialStatus','أنشئ منشأة سحابية واخترها أولًا.',true);return;}
-  subscriptionMessage('#trialStatus','جارٍ بدء التجربة...');
-  const {data,error}=await cloud.rpc('start_organization_trial',{p_organization_id:orgId,p_plan_code:planCode});
-  if(error){subscriptionMessage('#trialStatus','لم تبدأ التجربة: '+error.message,true);return;}
-  subscriptionMessage('#trialStatus','تم إنشاء طلب التجربة بنجاح. مدة التجربة 14 يومًا، دون خصم أو تجديد تلقائي.');
-  await loadSelectedSubscription();
 }
 async function loadPlatformSubscriptionDashboard(){
   const host=$('#platformSubscriptionDashboard');if(!host)return;
@@ -169,7 +156,7 @@ function clearDemo(){if(confirm('هل أنت متأكد من مسح بيانات
 $('#refreshSubscriptionsBtn').addEventListener('click',loadSubscriptionWorkspace);
 $('#loadSubscriptionBtn').addEventListener('click',loadSelectedSubscription);
 $('#subscriptionOrgSelect').addEventListener('change',loadSelectedSubscription);
-$('#startTrialBtn').addEventListener('click',startOrganizationTrial);
+
 $('#admin').insertAdjacentHTML('beforeend','<div class="card"><h3>اشتراكات المنصة — للمالك فقط</h3><p class="muted">تظهر الأرقام بعد منح حساب المؤسس صلاحية مدير المنصة في قاعدة البيانات.</p><div id="platformSubscriptionDashboard" class="muted">لم يتم تحميل لوحة المالك بعد.</div><button type="button" class="btn-light" id="refreshPlatformDashboardBtn">تحديث لوحة الاشتراكات</button></div>');
 $('#refreshPlatformDashboardBtn').addEventListener('click',loadPlatformSubscriptionDashboard);
 render();
