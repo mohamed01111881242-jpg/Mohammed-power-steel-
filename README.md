@@ -24,6 +24,9 @@
 - `20261127_directory_and_profiles.sql`
 - `20261127173046_subscription_policy_and_private_rls_helpers.sql`
 - `20261127190000_cloud_marketplace_onboarding_and_matching.sql`
+- `20261127191500_authenticated_business_directory.sql`
+- `20261127193000_private_auth_profile_bootstrap.sql`
+- `20261127194500_offer_decision_workflow.sql`
 
 ## حماية المفاتيح
 مفتاح Supabase publishable الموجود في الواجهة مخصص للمتصفح. لا تضع أبدًا `service_role` أو مفاتيح سرية أو WhatsApp access token أو مفاتيح الذكاء الاصطناعي داخل `index.html` أو GitHub.
