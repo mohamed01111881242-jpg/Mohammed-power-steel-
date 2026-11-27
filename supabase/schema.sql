@@ -88,6 +88,26 @@ create index if not exists requests_org_idx on public.service_requests(organizat
 create index if not exists offers_request_idx on public.offers(request_id, created_at desc);
 create index if not exists activity_org_idx on public.activity_log(organization_id, created_at desc);
 
+
+-- SECURITY DEFINER helpers avoid recursive row-level-security checks on memberships.
+create or replace function public.is_org_member(p_org_id uuid, p_user_id uuid default auth.uid())
+returns boolean language sql stable security definer set search_path = public as $
+  select exists (
+    select 1 from public.memberships m
+    where m.organization_id = p_org_id and m.user_id = p_user_id
+  );
+$;
+
+create or replace function public.has_org_role(p_org_id uuid, p_roles text[], p_user_id uuid default auth.uid())
+returns boolean language sql stable security definer set search_path = public as $
+  select exists (
+    select 1 from public.memberships m
+    where m.organization_id = p_org_id
+      and m.user_id = p_user_id
+      and m.member_role = any(p_roles)
+  );
+$;
+
 create or replace function public.set_updated_at()
 returns trigger language plpgsql as $$
 begin
@@ -133,19 +153,19 @@ using (id = auth.uid()) with check (id = auth.uid());
 -- Organization records are visible to their members; creator may create the organization.
 drop policy if exists "organization_select_members" on public.organizations;
 create policy "organization_select_members" on public.organizations for select
-using (exists (select 1 from public.memberships m where m.organization_id = id and m.user_id = auth.uid()));
+using (public.is_org_member(id));
 drop policy if exists "organization_insert_creator" on public.organizations;
 create policy "organization_insert_creator" on public.organizations for insert
 with check (created_by = auth.uid());
 drop policy if exists "organization_update_admins" on public.organizations;
 create policy "organization_update_admins" on public.organizations for update
-using (exists (select 1 from public.memberships m where m.organization_id = id and m.user_id = auth.uid() and m.member_role in ('owner','admin')))
-with check (exists (select 1 from public.memberships m where m.organization_id = id and m.user_id = auth.uid() and m.member_role in ('owner','admin')));
+using (public.has_org_role(id, array['owner','admin']))
+with check (public.has_org_role(id, array['owner','admin']));
 
 -- Members can see their own membership and organization admins can see the team's memberships.
 drop policy if exists "membership_select_team" on public.memberships;
 create policy "membership_select_team" on public.memberships for select
-using (user_id = auth.uid() or exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin')));
+using (user_id = auth.uid() or public.has_org_role(organization_id, array['owner','admin']));
 drop policy if exists "membership_insert_owner" on public.memberships;
 create policy "membership_insert_owner" on public.memberships for insert
 with check (
@@ -154,32 +174,32 @@ with check (
 );
 drop policy if exists "membership_update_admins" on public.memberships;
 create policy "membership_update_admins" on public.memberships for update
-using (exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin')))
-with check (exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin')));
+using (public.has_org_role(organization_id, array['owner','admin']))
+with check (public.has_org_role(organization_id, array['owner','admin']));
 
 -- Public open requests can be discovered; private and non-open requests stay with their members.
 drop policy if exists "request_select_public_or_member" on public.service_requests;
 create policy "request_select_public_or_member" on public.service_requests for select
 using (
   (is_public = true and status = 'open')
-  or exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid())
+  or public.is_org_member(organization_id)
 );
 drop policy if exists "request_insert_member" on public.service_requests;
 create policy "request_insert_member" on public.service_requests for insert
 with check (
   created_by = auth.uid()
-  and exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid())
+  and public.is_org_member(organization_id)
 );
 drop policy if exists "request_update_member_admin" on public.service_requests;
 create policy "request_update_member_admin" on public.service_requests for update
-using (exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin','manager')))
-with check (exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin','manager')));
+using (public.has_org_role(organization_id, array['owner','admin','manager']))
+with check (public.has_org_role(organization_id, array['owner','admin','manager']));
 
 -- Offers are visible only to the provider and the owner of the request.
 drop policy if exists "offer_select_parties" on public.offers;
 create policy "offer_select_parties" on public.offers for select
 using (
-  exists (select 1 from public.memberships m where m.organization_id = provider_organization_id and m.user_id = auth.uid())
+  public.is_org_member(provider_organization_id)
   or exists (
     select 1 from public.service_requests r
     join public.memberships m on m.organization_id = r.organization_id
@@ -190,13 +210,13 @@ drop policy if exists "offer_insert_provider_member" on public.offers;
 create policy "offer_insert_provider_member" on public.offers for insert
 with check (
   created_by = auth.uid()
-  and exists (select 1 from public.memberships m where m.organization_id = provider_organization_id and m.user_id = auth.uid())
+  and public.is_org_member(provider_organization_id)
   and exists (select 1 from public.service_requests r where r.id = request_id and r.status = 'open' and r.organization_id <> provider_organization_id)
 );
 drop policy if exists "offer_update_parties" on public.offers;
 create policy "offer_update_parties" on public.offers for update
 using (
-  exists (select 1 from public.memberships m where m.organization_id = provider_organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin','manager'))
+  public.has_org_role(provider_organization_id, array['owner','admin','manager'])
   or exists (
     select 1 from public.service_requests r
     join public.memberships m on m.organization_id = r.organization_id
@@ -204,7 +224,7 @@ using (
   )
 )
 with check (
-  exists (select 1 from public.memberships m where m.organization_id = provider_organization_id and m.user_id = auth.uid() and m.member_role in ('owner','admin','manager'))
+  public.has_org_role(provider_organization_id, array['owner','admin','manager'])
   or exists (
     select 1 from public.service_requests r
     join public.memberships m on m.organization_id = r.organization_id
@@ -215,13 +235,13 @@ with check (
 -- Activity history is private to members of the related organization.
 drop policy if exists "activity_select_members" on public.activity_log;
 create policy "activity_select_members" on public.activity_log for select
-using (organization_id is not null and exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid()));
+using (organization_id is not null and public.is_org_member(organization_id));
 drop policy if exists "activity_insert_members" on public.activity_log;
 create policy "activity_insert_members" on public.activity_log for insert
 with check (
   actor_user_id = auth.uid()
   and organization_id is not null
-  and exists (select 1 from public.memberships m where m.organization_id = organization_id and m.user_id = auth.uid())
+  and public.is_org_member(organization_id)
 );
 
 -- IMPORTANT:
