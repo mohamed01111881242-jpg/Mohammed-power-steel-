@@ -182,16 +182,16 @@ begin
     raise exception 'Selected paid plan is not available';
   end if;
 
+  if exists (select 1 from public.subscriptions s where s.organization_id = p_organization_id) then
+    raise exception 'This organization already has a subscription record';
+  end if;
+
   update public.organizations
   set trial_started_at = v_now
   where id = p_organization_id and trial_started_at is null;
 
   if not found then
     raise exception 'This organization has already used its free trial';
-  end if;
-
-  if exists (select 1 from public.subscriptions s where s.organization_id = p_organization_id) then
-    raise exception 'This organization already has a subscription record';
   end if;
 
   insert into public.subscriptions (
