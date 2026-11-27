@@ -91,22 +91,22 @@ create index if not exists activity_org_idx on public.activity_log(organization_
 
 -- SECURITY DEFINER helpers avoid recursive row-level-security checks on memberships.
 create or replace function public.is_org_member(p_org_id uuid, p_user_id uuid default auth.uid())
-returns boolean language sql stable security definer set search_path = public as $
+returns boolean language sql stable security definer set search_path = public as $$
   select exists (
     select 1 from public.memberships m
     where m.organization_id = p_org_id and m.user_id = p_user_id
   );
-$;
+$$;
 
 create or replace function public.has_org_role(p_org_id uuid, p_roles text[], p_user_id uuid default auth.uid())
-returns boolean language sql stable security definer set search_path = public as $
+returns boolean language sql stable security definer set search_path = public as $$
   select exists (
     select 1 from public.memberships m
     where m.organization_id = p_org_id
       and m.user_id = p_user_id
       and m.member_role = any(p_roles)
   );
-$;
+$$;
 
 create or replace function public.set_updated_at()
 returns trigger language plpgsql as $$
