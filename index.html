@@ -13,7 +13,7 @@
 <aside class="side"><div class="brand">⚙ منصة المعارف<small>شبكة ذكية تربط الشغل بالناس الصح</small></div>
 <nav class="nav">
 <button class="active" data-page="home">⌂ الرئيسية</button><button data-page="organizations">▦ الشركات والورش</button><button data-page="sectorTools">🍽 المطاعم والتوصيل</button><button data-page="requests">▤ طلبات الشغل</button><button data-page="offers">⇄ عروض الأسعار</button><button data-page="professionals">♙ المهنيون</button><button data-page="admin">▥ الإدارة والتقارير</button><button data-page="subscriptions">♧ الاشتراكات</button><button data-page="settings">⚙ الإعدادات</button>
-</nav><div class="side-note">نسخة MVP تجريبية<br>البيانات محلية لحين تفعيل قاعدة البيانات السحابية</div></aside>
+</nav><div class="side-note">نسخة أولية متصلة بقاعدة البيانات السحابية<br>بعض التكاملات الخارجية لم تُفعّل بعد</div></aside>
 <main class="main"><header class="top"><div><strong>منصة المعارف</strong><br><small id="pageSubtitle">لوحة متابعة شبكة الأعمال</small></div><span class="pill">نسخة تطوير</span></header>
 <div class="wrap">\n<section class="card" id="cloudAuthCard" style="margin-bottom:18px">
 <h3>الدخول إلى المنصة السحابية</h3>
@@ -111,8 +111,8 @@
 </div>
 <div class="notice">لا توجد بوابة دفع إلكتروني. تسدد الاشتراكات خارج المنصة يدويًا، وتسجل الإدارة التحصيل بعد التحقق منه. لا يتم إدخال بيانات بطاقات أو تنفيذ خصم تلقائي.</div>
 </section>
-<section class="page" id="settings"><div class="section-head"><h2>إعدادات المنصة</h2></div><div class="card"><h3>حالة الاتصال</h3><p><span class="pill">اتصال Supabase مضاف</span></p><p class="muted">تسجيل الهاتف وإدارة ملفات الأنشطة وقراءة بيانات الاشتراكات تستخدم اتصال Supabase. نماذج الطلبات والعروض المحلية ما زالت في مرحلة النقل إلى قاعدة البيانات المشتركة.</p><h3>قنوات التواصل</h3><p class="muted">واتساب هو قناة التواصل الأساسية المخطط لها. لم يتم توصيل WhatsApp Business Cloud API أو تشغيل رسائل آلية في هذه النسخة.</p><h3>حماية البيانات</h3><p class="muted">لا تدخل بيانات عملاء حقيقية أو حساسة في النسخة التجريبية؛ بياناتها محفوظة محليًا في متصفح هذا الجهاز فقط.</p></div></section>
-<div class="notice">تنبيه: تسجيل الدخول وملفات الأنشطة والاشتراكات متصلة بـ Supabase. بعض نماذج الطلبات والعروض ما زالت تجريبية ومحلية. لم يتم توصيل WhatsApp Business API أو بوابة الدفع بعد.</div>
+<section class="page" id="settings"><div class="section-head"><h2>إعدادات المنصة</h2></div><div class="card"><h3>حالة الاتصال</h3><p><span class="pill">اتصال Supabase مضاف</span></p><p class="muted">تسجيل الهاتف والأنشطة والطلبات والعروض وقوائم المطاعم ومناطق التوصيل والاشتراكات تستخدم قاعدة بيانات Supabase المشتركة.</p><h3>قنوات التواصل</h3><p class="muted">واتساب هو قناة التواصل الأساسية المخطط لها. لم يتم توصيل WhatsApp Business Cloud API أو تشغيل رسائل آلية في هذه النسخة.</p><h3>حماية البيانات</h3><p class="muted">لا تدخل بيانات حساسة غير لازمة. صلاحيات الوصول تحكمها سياسات قاعدة البيانات، وما زالت مراجعة الأمان الشاملة والاختبارات التشغيلية مطلوبة.</p></div></section>
+<div class="notice">تنبيه: تسجيل الدخول وملفات الأنشطة والاشتراكات متصلة بـ Supabase. تظل بعض التكاملات الخارجية والاختبارات التشغيلية قيد الاستكمال. لم يتم توصيل WhatsApp Business API أو بوابة الدفع بعد.</div>
 </div><div class="footer">© منصة المعارف — تطوير تدريجي، مع موافقة بشرية على العروض والالتزامات.</div></main></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
