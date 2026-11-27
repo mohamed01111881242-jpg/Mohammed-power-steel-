@@ -67,7 +67,7 @@
 const SUPABASE_URL="https://llkxjglbxxsrhagjfhqx.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_Z4CXAYTHYLxM5jHWC42blQ_vMIJYqAY";
 const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const $=s=>document.querySelector(s), $=s=>[...document.querySelectorAll(s)];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 let cloudUser=null;
 function egyptPhone(v){let n=String(v||'').replace(/[\s()-]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('0020'))return '+'+n.slice(2);if(n.startsWith('20'))return '+'+n;if(n.startsWith('0'))return '+20'+n.slice(1);if(n.startsWith('1'))return '+20'+n;return n;}
 function authStatus(msg,isError=false){$('#cloudAuthStatus').textContent=msg;$('#cloudAuthStatus').style.background=isError?'#fff0ed':'#fff7e6';}
