@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10251f"><title>النظام الخارق للمعارف</title>
+<style>
+:root{--bg:#f3f6f4;--ink:#17251f;--muted:#65736c;--green:#176b4a;--dark:#10251f;--line:#e1e9e4;--gold:#d5a94e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 17px;background:var(--green);color:#fff;font-weight:700}.wrap{max-width:1120px;margin:auto;padding:18px}.top{background:var(--dark);color:#fff;padding:20px 0}.topin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-size:20px;font-weight:800}.brand small{display:block;color:#b9d2c4;font-size:12px;font-weight:400}.hero{padding:38px 0 24px}.hero h1{font-size:clamp(27px,5vw,44px);line-height:1.3;margin:0 0 10px}.hero p{color:var(--muted);max-width:700px;margin:0 0 20px}.actions{display:flex;gap:10px;flex-wrap:wrap}.secondary{background:#e3eee8;color:var(--green)}.gold{color:var(--gold)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:20px 0}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 5px 20px #10251f08}.card h3{margin:0 0 5px}.muted{color:var(--muted);font-size:14px}.section{margin:30px 0}.section h2{margin:0 0 12px}.pill{display:inline-block;background:#e7f2eb;color:var(--green);padding:4px 10px;border-radius:99px;font-size:12px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;color:var(--ink)}textarea{min-height:90px;resize:vertical}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.tabs button{background:#e7eee9;color:var(--ink)}.tabs button.active{background:var(--green);color:#fff}.hidden{display:none!important}.notice{padding:12px 14px;background:#fff7e6;border:1px solid #f0dfb8;border-radius:12px;font-size:13px}.stat{font-size:28px;font-weight:800;color:var(--green)}footer{padding:25px 0;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:35px}@media(max-width:620px){.formgrid{grid-template-columns:1fr}.wrap{padding:14px}.hero{padding-top:26px}}
+</style></head>
+<body>
+<header class="top"><div class="wrap topin"><div class="brand">⚙ النظام الخارق للمعارف <small>منصة تجمع الشغل والخبرة والفرص في مكان واحد</small></div><span class="pill">نسخة تجريبية أولى</span></div></header>
+<main class="wrap">
+<section class="hero"><span class="pill">منصة للشركات والورش والمهنيين والموردين والعملاء</span><h1>وصّل شغلك بالناس الصح.<br><span class="gold">من أول الطلب لحد التسليم.</span></h1><p>سجّل نشاطك، اعرض خدماتك، استقبل طلبات الشغل، واطلب عروض أسعار. واتساب هو قناة التواصل الأساسية، ولوحة الإدارة تتابع حركة المنصة.</p><div class="actions"><button onclick="showSection('join')">سجّل نشاطك</button><button class="secondary" onclick="showSection('request')">أضف طلب شغل</button><button class="secondary" onclick="showSection('directory')">استكشف أنواع الحسابات</button></div></section>
+<section class="grid">
+<div class="card"><div class="stat">01</div><h3>الشركات والمقاولون</h3><p class="muted">طلبات تنفيذ، مقايسات، ومتابعة الموردين والورش.</p></div>
+<div class="card"><div class="stat">02</div><h3>الورش والمصانع</h3><p class="muted">استقبال فرص التشغيل وعرض التخصص والطاقة الإنتاجية.</p></div>
+<div class="card"><div class="stat">03</div><h3>المهنيون</h3><p class="muted">ملف مهني ومهارات وخبرات وفرص عمل مناسبة.</p></div>
+<div class="card"><div class="stat">04</div><h3>الموردون والعملاء</h3><p class="muted">توريد خامات ومستلزمات، وطلب منتجات وخدمات.</p></div>
+</section>
+<section id="join" class="section card hidden"><h2>إنشاء حساب / تعريف النشاط</h2><p class="muted">املأ البيانات الأساسية. في النسخة التجريبية تُحفظ البيانات على هذا الجهاز فقط.</p>
+<form id="joinForm" class="formgrid">
+<div class="field"><label>نوع الحساب</label><select name="role" required><option value="">اختر</option><option>شركة / مقاول</option><option>ورشة</option><option>مصنع</option><option>مهني / صنايعي</option><option>مورد</option><option>عميل</option></select></div>
+<div class="field"><label>الاسم أو اسم النشاط</label><input name="name" required placeholder="الاسم أو اسم الشركة"></div>
+<div class="field"><label>رقم واتساب</label><input name="phone" required inputmode="tel" placeholder="01xxxxxxxxx"></div>
+<div class="field"><label>المحافظة / المنطقة</label><input name="area" required placeholder="مثال: العبور - القاهرة"></div>
+<div class="field full"><label>التخصص أو الخدمات أو المنتجات</label><textarea name="specialty" required placeholder="اكتب بتشتغل في إيه بالتفصيل"></textarea></div>
+<div class="field full"><button type="submit">حفظ بيانات الحساب</button></div></form><div id="joinMsg" class="notice hidden"></div></section>
+<section id="request" class="section card hidden"><h2>إضافة طلب شغل أو توريد</h2><p class="muted">سجّل تفاصيل الطلب ليتم تنظيمه ومطابقته مع مقدم الخدمة المناسب.</p>
+<form id="requestForm" class="formgrid">
+<div class="field"><label>نوع الطلب</label><select name="kind" required><option value="">اختر</option><option>تنفيذ شغل</option><option>مقاولة</option><option>تصنيع</option><option>توريد خامات</option><option>طلب فني / صنايعي</option><option>شراء منتج</option></select></div>
+<div class="field"><label>اسم صاحب الطلب</label><input name="owner" required></div>
+<div class="field"><label>رقم واتساب للتواصل</label><input name="phone" required inputmode="tel"></div>
+<div class="field"><label>مكان التنفيذ</label><input name="area" required></div>
+<div class="field full"><label>وصف المطلوب</label><textarea name="details" required placeholder="المقاسات والكميات والخامات والموعد إن وجد"></textarea></div>
+<div class="field full"><button type="submit">حفظ الطلب</button></div></form><div id="requestMsg" class="notice hidden"></div></section>
+<section id="directory" class="section hidden"><h2>أقسام المنصة</h2><div class="grid" id="directoryCards"></div></section>
+<section class="section card"><h2>لوحة متابعة المدير</h2><p class="muted">ملخص محلي للبيانات التي أُدخلت من هذا المتصفح. لا تظهر بيانات المستخدمين لبعضهم البعض.</p><div class="grid"><div><div class="stat" id="usersCount">0</div><div class="muted">حسابات مسجلة على هذا الجهاز</div></div><div><div class="stat" id="requestsCount">0</div><div class="muted">طلبات مسجلة على هذا الجهاز</div></div></div><button class="secondary" onclick="exportData()">تصدير البيانات JSON</button></section>
+<div class="notice">تنبيه مهم: هذه نسخة واجهة أولية للتجربة وليست منصة تشغيل فعلية بعد. التسجيل والطلبات محفوظة محليًا على نفس المتصفح فقط. ربط واتساب الحقيقي، قاعدة البيانات السحابية، تسجيل الدخول والصلاحيات، والإشعارات تحتاج إعداد الخادم ومفاتيح الخدمات.</div>
+<footer>© النظام الخارق للمعارف — نموذج أولي قيد التطوير</footer>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+function showSection(id){document.querySelectorAll('#join,#request,#directory').forEach(x=>x.classList.add('hidden'));$('#'+id).classList.remove('hidden');$('#'+id).scrollIntoView({behavior:'smooth',block:'start'});}
+const roles=['شركة / مقاول','ورشة','مصنع','مهني / صنايعي','مورد','عميل'];
+$('#directoryCards').innerHTML=roles.map((r,i)=>'<div class="card"><span class="pill">حساب '+(i+1)+'</span><h3>'+r+'</h3><p class="muted">ملف تعريفي، بيانات تواصل، تخصص، وموقع جغرافي.</p></div>').join('');
+const get=k=>JSON.parse(localStorage.getItem(k)||'[]');const put=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function refresh(){ $('#usersCount').textContent=get('users').length;$('#requestsCount').textContent=get('requests').length;}refresh();
+$('#joinForm').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));d.createdAt=new Date().toISOString();const a=get('users');a.push(d);put('users',a);$('#joinMsg').textContent='تم حفظ بيانات الحساب على هذا الجهاز. الخطوة التالية ربطها بقاعدة بيانات مشتركة.';$('#joinMsg').classList.remove('hidden');e.target.reset();refresh();});
+$('#requestForm').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));d.createdAt=new Date().toISOString();d.status='جديد';const a=get('requests');a.push(d);put('requests',a);$('#requestMsg').textContent='تم تسجيل الطلب محليًا. لم يتم إرساله لمقدمي الخدمة بعد.';$('#requestMsg').classList.remove('hidden');e.target.reset();refresh();});
+function exportData(){const blob=new Blob([JSON.stringify({users:get('users'),requests:get('requests')},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='al-maaref-demo-data.json';a.click();URL.revokeObjectURL(a.href);}
+</script></body></html>
