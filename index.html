@@ -15,7 +15,29 @@
 <button class="active" data-page="home">⌂ الرئيسية</button><button data-page="organizations">▦ الشركات والورش</button><button data-page="requests">▤ طلبات الشغل</button><button data-page="offers">⇄ عروض الأسعار</button><button data-page="professionals">♙ المهنيون</button><button data-page="admin">▥ الإدارة والتقارير</button><button data-page="settings">⚙ الإعدادات</button>
 </nav><div class="side-note">نسخة MVP تجريبية<br>البيانات محلية لحين تفعيل قاعدة البيانات السحابية</div></aside>
 <main class="main"><header class="top"><div><strong>منصة المعارف</strong><br><small id="pageSubtitle">لوحة متابعة شبكة الأعمال</small></div><span class="pill">نسخة تطوير</span></header>
-<div class="wrap">
+<div class="wrap">\n<section class="card" id="cloudAuthCard" style="margin-bottom:18px">
+<h3>الدخول إلى المنصة السحابية</h3>
+<p class="muted">سجّل الدخول برقم الهاتف ورمز التحقق. يتطلب ذلك تفعيل تسجيل الهاتف وخدمة الرسائل في إعدادات Supabase.</p>
+<div class="formgrid">
+<div class="field"><label>رقم الهاتف المصري</label><input id="cloudPhone" inputmode="tel" placeholder="01xxxxxxxxx"></div>
+<div class="field" style="align-self:end"><button type="button" id="sendOtpBtn">إرسال رمز التحقق</button></div>
+<div class="field"><label>رمز التحقق SMS</label><input id="cloudOtp" inputmode="numeric" placeholder="أدخل الرمز"></div>
+<div class="field" style="align-self:end"><button type="button" class="btn-light" id="verifyOtpBtn">تأكيد الدخول</button></div>
+</div>
+<div id="cloudAuthStatus" class="notice">جارٍ تجهيز الاتصال...</div>
+<div id="cloudOrgBox" class="hidden">
+<hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+<h3>إنشاء ملف نشاط سحابي</h3>
+<div class="formgrid">
+<div class="field"><label>نوع الحساب</label><select id="cloudOrgType"><option value="company">شركة</option><option value="contractor">مقاول</option><option value="workshop">ورشة</option><option value="factory">مصنع</option><option value="professional">مهني / صنايعي</option><option value="supplier">مورد</option><option value="customer">عميل</option></select></div>
+<div class="field"><label>اسم النشاط</label><input id="cloudOrgName" placeholder="اسم الشركة أو الورشة"></div>
+<div class="field"><label>المدينة / المنطقة</label><input id="cloudOrgCity" placeholder="مثال: العبور - القليوبية"></div>
+<div class="field"><label>التخصص</label><input id="cloudOrgDesc" placeholder="مجال العمل والخدمات"></div>
+<div class="field full"><button type="button" id="createCloudOrgBtn">حفظ النشاط في قاعدة البيانات</button></div>
+</div>
+<div id="cloudOrgStatus" class="muted"></div>
+</div>
+</section>
 <section class="page active" id="home"><div class="welcome"><h1>أهلاً بك في منصة المعارف</h1><p>مكان واحد للشركات والمقاولين والورش والمصانع والمهنيين والموردين والعملاء.</p></div>
 <div class="grid">
 <div class="card"><span class="muted">الأنشطة المسجلة</span><div class="stat" id="statOrgs">0</div></div><div class="card"><span class="muted">طلبات الشغل</span><div class="stat" id="statRequests">0</div></div><div class="card"><span class="muted">عروض الأسعار</span><div class="stat" id="statOffers">0</div></div><div class="card"><span class="muted">طلبات مفتوحة</span><div class="stat" id="statOpen">0</div></div>
