@@ -11,6 +11,9 @@
 1. `supabase/migrations/20261127_directory_and_profiles.sql`
 2. `supabase/migrations/20261127173046_subscription_policy_and_private_rls_helpers.sql`
 3. `supabase/migrations/20261127190000_cloud_marketplace_onboarding_and_matching.sql`
+4. `supabase/migrations/20261127191500_authenticated_business_directory.sql`
+5. `supabase/migrations/20261127193000_private_auth_profile_bootstrap.sql`
+6. `supabase/migrations/20261127194500_offer_decision_workflow.sql`
 
 ## ما يعمل في الواجهة
 - اتصال Supabase باستخدام Project URL وpublishable key.
@@ -18,6 +21,8 @@
 - إنشاء نشاط وعضوية مالك في معاملة واحدة بواسطة `create_organization_with_owner`.
 - دليل الأنشطة العامة.
 - نشر الطلبات والعروض في قاعدة البيانات المشتركة.
+- مطابقة الطلبات حسب التخصص والمنطقة.
+- قبول/رفض العروض من صاحب الطلب، وتحويل الطلب إلى قيد التنفيذ عند القبول.
 - تحديث القوائم بعد تسجيل الدخول وإضافة البيانات.
 
 ## ما يجب إعداده يدويًا
