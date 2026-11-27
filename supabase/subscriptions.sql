@@ -238,10 +238,11 @@ begin
 
   select * into v_plan from public.subscription_plans where id = v_sub.plan_id;
 
-  if v_sub.status = 'canceled' then
-    v_access := case when now() <= v_sub.grace_until then 'grace' else 'expired' end;
-  elsif now() <= v_sub.current_period_end then
-    v_access := case when v_sub.status = 'trialing' then 'trialing' else 'active' end;
+  if now() <= v_sub.current_period_end then
+    v_access := case
+      when v_sub.status = 'trialing' then 'trialing'
+      else 'active'
+    end;
   elsif now() <= v_sub.grace_until then
     v_access := 'grace';
   else
