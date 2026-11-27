@@ -11,6 +11,7 @@
 - نشر طلبات التنفيذ والتصنيع والتوريد والعمالة والمنتجات في قاعدة البيانات المشتركة.
 - إرسال عروض أسعار مرتبطة بطلب وبنشاط مقدم العرض.
 - قبول أو رفض العروض من صاحب الطلب؛ وعند القبول يُغلق استقبال العروض الأخرى تلقائيًا.
+- استقبال رسائل WhatsApp عبر Webhook آمن وتخزين المحادثات، مع ردود ذكاء اصطناعي عند إعداد أسرار Meta وOpenAI.
 - صلاحيات صفوف RLS لعزل بيانات العضويات والطلبات والعروض.
 - اشتراكات مجانية ومدفوعة وفق السياسة المعتمدة: 30 يومًا، سماح 7 أيام، وتجديد يدوي افتراضيًا.
 
@@ -27,9 +28,17 @@
 - `20261127191500_authenticated_business_directory.sql`
 - `20261127193000_private_auth_profile_bootstrap.sql`
 - `20261127194500_offer_decision_workflow.sql`
+- `20261127200000_whatsapp_inbox_foundation.sql`
+- `20261127201500_whatsapp_conversation_history.sql`
 
 ## حماية المفاتيح
 مفتاح Supabase publishable الموجود في الواجهة مخصص للمتصفح. لا تضع أبدًا `service_role` أو مفاتيح سرية أو WhatsApp access token أو مفاتيح الذكاء الاصطناعي داخل `index.html` أو GitHub.
+
+## WhatsApp Webhook
+تم نشر الوظيفة `whatsapp-webhook` على Supabase. عنوان الاستقبال:
+`https://llkxjglbxxsrhagjfhqx.supabase.co/functions/v1/whatsapp-webhook`
+
+تحتاج إلى أسرار الخادم الموضحة في `supabase/SETUP.md` قبل أن يبدأ التحقق من Meta والردود التلقائية.
 
 ## ما زال مطلوبًا قبل التشغيل التجاري الكامل
 - إعداد مزود SMS في Supabase واختبار تسجيل OTP على رقم حقيقي.
