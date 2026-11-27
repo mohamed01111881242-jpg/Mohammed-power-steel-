@@ -231,6 +231,7 @@ async function loadWorkspaceData(){
  cloudOrganizations=a.data||[];cloudRequests=b.data||[];cloudOffers=c.data||[];
  myOrganizations=(d.data||[]).filter(x=>x.organizations).map(x=>({...x.organizations,role:x.member_role}));
  render();
+ await loadSectorTools();
 }
 function render(){
  const orgs=cloudOrganizations,reqs=cloudRequests,offers=cloudOffers;
