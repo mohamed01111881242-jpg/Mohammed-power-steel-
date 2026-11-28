@@ -179,9 +179,9 @@ async function loadExecutiveDashboard(){
  const specs=[
   ['profiles','id'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
  ];
- const results=await Promise.all(specs.map(([table,fields])=>cloud.from(table).select(fields).limit(1500)));
- const data={};specs.forEach(([table],i)=>{data[table]=results[i].error?null:(results[i].data||[]);});
- const count=(table)=>data[table]===null?'—':data[table].length;
+ const [results,countResults]=await Promise.all([Promise.all(specs.map(([table,fields])=>cloud.from(table).select(fields).limit(1500))),Promise.all(specs.map(([table])=>cloud.from(table).select('id',{count:'exact',head:true})))]);
+ const data={},exactCounts={};specs.forEach(([table],i)=>{data[table]=results[i].error?null:(results[i].data||[]);exactCounts[table]=countResults[i].error?null:countResults[i].count;});
+ const count=(table)=>exactCounts[table]===null?'—':Number(exactCounts[table]||0).toLocaleString('ar-EG');
  const fmt=n=>Number(n||0).toLocaleString('ar-EG');
  const orgs=data.organizations||[],reqs=data.service_requests||[],offers=data.offers||[],reviews=data.provider_reviews||[],sessions=data.negotiation_sessions||[],payments=data.subscription_payments||[];
  const accepted=offers.filter(x=>x.status==='accepted').length,completed=reqs.filter(x=>x.status==='completed').length,open=reqs.filter(x=>x.status==='open').length;
