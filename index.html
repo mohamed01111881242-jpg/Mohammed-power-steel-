@@ -14,6 +14,7 @@
 .exec-kicker{font-size:11px;letter-spacing:1px;color:#c8e4d2}.exec-title{font-size:clamp(24px,3vw,35px);font-weight:900;margin:5px 0}.exec-sub{color:#d8e8df;font-size:13px;max-width:700px}
 .exec-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative;z-index:1}.exec-actions button{background:#ffffff;color:#174b35}.exec-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:15px 0}.metric{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 5px 18px #10251f08;min-width:0}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}.metric-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e9f3ed;color:var(--green);font-size:17px}.metric-value{font-size:clamp(23px,2.5vw,31px);font-weight:900;color:var(--ink);margin:9px 0 2px;direction:rtl}.metric-note{font-size:11px;color:var(--muted)}
 .exec-panels{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin:14px 0}.exec-panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;min-width:0}.exec-panel h3{margin:0 0 3px;font-size:15px}.exec-bars{display:flex;align-items:flex-end;gap:10px;height:170px;padding:18px 4px 0;border-bottom:1px solid var(--line)}.exec-bar-col{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px}.exec-bar{width:min(34px,75%);min-height:3px;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#4b9c70,#176b4a);position:relative}.exec-bar-value{font-size:10px;color:var(--muted)}.exec-bar-label{font-size:10px;color:var(--muted);white-space:nowrap}.exec-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--muted)}.exec-legend span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#28754f;margin-left:5px}.exec-hbar{display:grid;gap:11px;margin-top:15px}.exec-hrow{display:grid;grid-template-columns:95px 1fr 35px;gap:8px;align-items:center;font-size:12px}.exec-track{height:9px;background:#edf2ef;border-radius:99px;overflow:hidden}.exec-fill{height:100%;background:linear-gradient(90deg,#6fb18a,#176b4a);border-radius:99px}.exec-split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.exec-table{width:100%;border-collapse:collapse;font-size:12px}.exec-table td,.exec-table th{padding:10px 7px;border-bottom:1px solid var(--line);text-align:right}.exec-table th{color:var(--muted);font-weight:500}.exec-lock{padding:20px;border:1px dashed #d6c69d;background:#fffaf0;border-radius:15px;color:#735d2c;margin:14px 0}
+.finance-income{background:linear-gradient(180deg,#55a878,#176b4a)}.finance-expense{background:linear-gradient(180deg,#e1a06d,#b65b39)}.finance-entry-row{display:grid;grid-template-columns:1.3fr .8fr .7fr .7fr auto;gap:10px;align-items:center;padding:12px 8px;border-bottom:1px solid var(--line);font-size:12px}.finance-entry-row:last-child{border-bottom:0}.finance-type{font-weight:800}.finance-type.income{color:#176b4a}.finance-type.expense{color:#b65b39}.finance-entry-row button{padding:6px 10px;font-size:11px}@media(max-width:700px){.finance-entry-row{grid-template-columns:1fr 1fr}.finance-entry-row button{grid-column:1/-1}}
 @media(max-width:950px){.exec-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.exec-panels{grid-template-columns:1fr}.exec-split{grid-template-columns:1fr}}
 @media(max-width:460px){.exec-metrics{gap:8px}.metric{padding:11px}.metric-value{font-size:22px}.exec-hero{padding:19px}.exec-bars{gap:5px}.exec-bar-label{font-size:9px}}
 
@@ -22,7 +23,7 @@
 <div class="app">
 <aside class="side"><div class="brand">⚙ منصة المعارف<small>لوحة المالك وإدارة المنصة</small></div>
 <nav class="nav">
-<button class="active" data-page="home">▣ مركز القيادة</button><button data-page="organizations">▦ الشركات والورش</button><button data-page="sectorTools">🍽 المطاعم والتوصيل</button><button data-page="requests">▤ طلبات الشغل</button><button data-page="offers">⇄ عروض الأسعار</button><button data-page="professionals">♙ المهنيون</button><button data-page="admin">▥ الإدارة والتقارير</button><button data-page="subscriptions">♧ الاشتراكات</button><button data-page="settings">⚙ الإعدادات</button>
+<button class="active" data-page="home">▣ مركز القيادة</button><button data-page="organizations">▦ الشركات والورش</button><button data-page="sectorTools">🍽 المطاعم والتوصيل</button><button data-page="requests">▤ طلبات الشغل</button><button data-page="offers">⇄ عروض الأسعار</button><button data-page="professionals">♙ المهنيون</button><button data-page="admin">▥ الإدارة والتقارير</button><button data-page="subscriptions">♧ الاشتراكات</button><button data-page="finance">▤ الإدارة المالية</button><button data-page="settings">⚙ الإعدادات</button>
 </nav><div class="side-note">نسخة أولية متصلة بقاعدة البيانات السحابية<br>بعض التكاملات الخارجية لم تُفعّل بعد</div></aside>
 <main class="main"><header class="top"><div><strong>لوحة المالك وإدارة المنصة</strong><br><small id="pageSubtitle">إدارة المستخدمين والأنشطة والطلبات والاشتراكات والتقييمات</small></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="./provider.html" style="text-decoration:none;background:#e8f1eb;color:#176b4a;padding:8px 12px;border-radius:10px;font-weight:bold">فتح بوابة مقدم الخدمة ←</a><span class="pill">لوحة الإدارة</span></div></header>
 <div class="wrap">\n<section class="card" id="cloudAuthCard" style="margin-bottom:18px">
@@ -123,6 +124,24 @@
 </div>
 <div class="notice">لا توجد بوابة دفع إلكتروني. تسدد الاشتراكات خارج المنصة يدويًا، وتسجل الإدارة التحصيل بعد التحقق منه. لا يتم إدخال بيانات بطاقات أو تنفيذ خصم تلقائي.</div>
 </section>
+<section class="page" id="finance">
+<div class="exec-hero"><div class="exec-kicker">MAAREF PLATFORM · FINANCE OFFICE</div><div class="exec-title">الإدارة المالية للمنصة</div><p class="exec-sub">دفتر مالي موحد يفرق بين تحصيل الاشتراكات والإيرادات الأخرى والمصروفات والمستحقات. لا تدخل قيمة صفقات العملاء ضمن إيراد المنصة.</p><div class="exec-actions"><button type="button" id="financeRefreshBtn">↻ تحديث الحسابات</button><span class="exec-kicker" id="financeUpdatedAt">بانتظار تحميل البيانات</span></div></div>
+<div id="financeAccess" class="exec-lock">🔐 الحسابات المالية متاحة لمالك المنصة أو المدير المعتمد فقط.</div>
+<div id="financeDashboard" class="hidden">
+<div class="exec-metrics" id="financeMetrics"></div>
+<div class="exec-panels"><div class="exec-panel"><h3>الإيرادات والمصروفات — آخر 6 أشهر</h3><p class="muted">الاشتراكات المحصلة + الإيرادات الأخرى المسجلة، مقابل المصروفات المسجلة</p><div id="financeMonthlyChart" class="exec-bars"></div><div class="exec-legend"><span>الإيرادات</span><span style="--x:1">المصروفات</span></div></div><div class="exec-panel"><h3>ملخص مصادر الأموال</h3><div id="financeBreakdown" class="exec-hbar"></div><p class="muted">الأرقام بالجنيه المصري، وتعتمد على السجلات المحفوظة فقط.</p></div></div>
+<div class="exec-panel" style="margin:14px 0"><div class="section-head"><h3>تسجيل حركة مالية</h3><span class="pill">تسجيل يدوي موثق</span></div><div class="notice">مدفوعات الاشتراكات تُسحب تلقائيًا من سجل التحصيل. لا تسجل الاشتراك مرة أخرى هنا حتى لا يتكرر الإيراد. استخدم «إيراد آخر» للعمولات أو أي دخل إضافي تم تحصيله بالفعل.</div>
+<form id="financeEntryForm" class="formgrid">
+<div class="field"><label>نوع الحركة</label><select name="entry_type" required><option value="expense">مصروف</option><option value="income">إيراد آخر محصل</option></select></div>
+<div class="field"><label>التصنيف</label><select name="category" required><option value="operating">مصروفات تشغيل</option><option value="marketing">تسويق وإعلانات</option><option value="salaries">رواتب وأجور</option><option value="software">برامج وخدمات تقنية</option><option value="commission">عمولات محصلة</option><option value="other_income">إيراد آخر</option><option value="other_expense">مصروفات أخرى</option></select></div>
+<div class="field"><label>المبلغ بالجنيه</label><input name="amount_egp" type="number" min="0.01" step="0.01" required placeholder="0.00"></div>
+<div class="field"><label>تاريخ الحركة</label><input name="entry_date" type="date" required></div>
+<div class="field full"><label>البيان / سبب الحركة</label><input name="description" maxlength="500" required placeholder="مثال: حملة إعلانية شهر ديسمبر"></div>
+<div class="field"><label>رقم مرجعي (اختياري)</label><input name="reference" maxlength="120" placeholder="رقم إيصال أو مرجع"></div>
+<div class="field" style="align-self:end"><button type="submit">حفظ الحركة المالية</button></div>
+</form><div id="financeFormStatus" class="muted"></div></div>
+<div class="exec-panel"><div class="section-head"><h3>آخر الحركات المالية</h3><span class="muted">يمكن إلغاء الحركة الخاطئة دون حذف أثرها</span></div><div id="financeEntriesList"><div class="empty">جارٍ تحميل السجل المالي...</div></div></div>
+</div></section>
 <section class="page" id="settings"><div class="section-head"><h2>إعدادات المنصة</h2></div><div class="card"><h3>حالة الاتصال</h3><p><span class="pill">اتصال Supabase مضاف</span></p><p class="muted">تسجيل الهاتف والأنشطة والطلبات والعروض وقوائم المطاعم ومناطق التوصيل والاشتراكات تستخدم قاعدة بيانات Supabase المشتركة.</p><h3>قنوات التواصل</h3><p class="muted">واتساب هو قناة التواصل الأساسية المخطط لها. لم يتم توصيل WhatsApp Business Cloud API أو تشغيل رسائل آلية في هذه النسخة.</p><h3>حماية البيانات</h3><p class="muted">لا تدخل بيانات حساسة غير لازمة. صلاحيات الوصول تحكمها سياسات قاعدة البيانات، وما زالت مراجعة الأمان الشاملة والاختبارات التشغيلية مطلوبة.</p></div></section>
 <div class="notice">تنبيه: تسجيل الدخول وملفات الأنشطة والاشتراكات متصلة بـ Supabase. تظل بعض التكاملات الخارجية والاختبارات التشغيلية قيد الاستكمال. لم يتم توصيل WhatsApp Business API أو بوابة الدفع بعد.</div>
 </div><div class="footer">© منصة المعارف — تطوير تدريجي، مع موافقة بشرية على العروض والالتزامات.</div></main></div>
@@ -175,9 +194,9 @@ async function loadExecutiveDashboard(){
  const host=$('#executiveDashboard');if(!host||!cloudUser)return;
  host.innerHTML='<div class="empty">جارٍ التحقق من صلاحية المالك وتحميل المؤشرات...</div>';
  const {data:sub,error:gateError}=await cloud.rpc('get_platform_subscription_dashboard');
- if(gateError||!sub){host.innerHTML='<div class="exec-lock">🔐 هذه المؤشرات خاصة بمالك المنصة أو مديرها المعتمد. الحساب الحالي لا يملك صلاحية عرض بيانات الإدارة الكاملة.</div>';$('#dashboardUpdatedAt').textContent='الصلاحية غير متاحة';return;}
+ if(gateError||!sub){host.innerHTML='<div class="exec-lock">🔐 لا يوجد مدير منصة معتمد لهذا الحساب. تم التأكد أن قائمة مديري المنصة فارغة حاليًا؛ لذلك لا يمكن فتح المؤشرات المحمية قبل ربط حساب المالك بصلاحية الإدارة.</div>';$('#dashboardUpdatedAt').textContent='يلزم تفعيل حساب المالك';return;}
  const specs=[
-  ['profiles','id,created_at'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
+  ['profiles','id,created_at'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,is_approved,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
  ];
  const [results,countResults]=await Promise.all([Promise.all(specs.map(([table,fields])=>cloud.from(table).select(fields).order(table==='subscription_payments'?'paid_at':'created_at',{ascending:false,nullsFirst:false}).limit(1500))),Promise.all(specs.map(([table])=>cloud.from(table).select('id',{count:'exact',head:true})))]);
  const data={},exactCounts={};specs.forEach(([table],i)=>{data[table]=results[i].error?null:(results[i].data||[]);exactCounts[table]=countResults[i].error?null:countResults[i].count;});
@@ -220,6 +239,58 @@ async function loadExecutiveDashboard(){
 }
 $('#dashboardRefreshBtn')?.addEventListener('click',loadExecutiveDashboard);
 
+
+const financeFmt=n=>Number(n||0).toLocaleString('ar-EG',{maximumFractionDigits:2});
+let financeRows=[];
+async function loadFinanceDashboard(){
+ const access=$('#financeAccess'),dash=$('#financeDashboard');
+ if(!cloudUser){access.textContent='سجّل الدخول بحساب مالك المنصة لعرض الحسابات المالية.';access.classList.remove('hidden');dash.classList.add('hidden');return;}
+ access.textContent='جارٍ التحقق من صلاحية المالك...';access.classList.remove('hidden');dash.classList.add('hidden');
+ const {data:gate,error:gateError}=await cloud.rpc('get_platform_subscription_dashboard');
+ if(gateError||!gate){access.textContent='لا توجد صلاحية مدير منصة لهذا الحساب. لا يمكن عرض أو تعديل الحسابات المالية.';$('#financeUpdatedAt').textContent='الصلاحية غير متاحة';return;}
+ const [payRes,entryRes]=await Promise.all([
+  cloud.from('subscription_payments').select('id,amount_egp,status,paid_at,created_at').order('paid_at',{ascending:false}).limit(1500),
+  cloud.from('platform_financial_entries').select('id,entry_type,category,description,amount_egp,entry_date,status,reference,created_at').order('entry_date',{ascending:false}).limit(1500)
+ ]);
+ if(payRes.error||entryRes.error){access.textContent='تعذر تحميل السجل المالي: '+(payRes.error?.message||entryRes.error?.message||'خطأ غير معروف');return;}
+ const payments=payRes.data||[];financeRows=entryRes.data||[];
+ const paid=payments.filter(x=>x.status==='paid');
+ const subIncome=paid.reduce((a,x)=>a+Number(x.amount_egp||0),0);
+ const pending=payments.filter(x=>x.status==='pending').reduce((a,x)=>a+Number(x.amount_egp||0),0);
+ const posted=financeRows.filter(x=>x.status==='posted');
+ const otherIncome=posted.filter(x=>x.entry_type==='income').reduce((a,x)=>a+Number(x.amount_egp||0),0);
+ const expenses=posted.filter(x=>x.entry_type==='expense').reduce((a,x)=>a+Number(x.amount_egp||0),0);
+ const commissions=posted.filter(x=>x.entry_type==='income'&&x.category==='commission').reduce((a,x)=>a+Number(x.amount_egp||0),0);
+ const totalIncome=subIncome+otherIncome,net=totalIncome-expenses;
+ const cards=[['إجمالي الإيرادات المحصلة',financeFmt(totalIncome)+' ج','💰','اشتراكات مدفوعة + إيرادات أخرى'],['اشتراكات محصلة',financeFmt(subIncome)+' ج','💳','من جدول مدفوعات الاشتراك'],['العمولات المحصلة',financeFmt(commissions)+' ج','％','مسجلة يدويًا بعد التحصيل'],['إجمالي المصروفات',financeFmt(expenses)+' ج','🧾','الحركات المالية المسجلة'],['صافي الربح التشغيلي',financeFmt(net)+' ج',net>=0?'📈':'📉','الإيرادات المحصلة ناقص المصروفات'],['مدفوعات اشتراك معلقة',financeFmt(pending)+' ج','⏳','ليست إيرادًا محصلًا بعد']];
+ $('#financeMetrics').innerHTML=cards.map((x,i)=>'<div class="metric"><div class="metric-top"><span>'+x[0]+'</span><span class="metric-icon">'+x[2]+'</span></div><div class="metric-value" style="'+(i===4?(net<0?'color:#b65b39':'color:#176b4a'):'')+'">'+x[1]+'</div><div class="metric-note">'+x[3]+'</div></div>').join('');
+ const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push({start:new Date(d.getFullYear(),d.getMonth(),1),end:new Date(d.getFullYear(),d.getMonth()+1,1),label:d.toLocaleDateString('ar-EG',{month:'short'})});}
+ const monthIncome=months.map(m=>paid.filter(x=>x.paid_at&&new Date(x.paid_at)>=m.start&&new Date(x.paid_at)<m.end).reduce((a,x)=>a+Number(x.amount_egp||0),0)+posted.filter(x=>x.entry_type==='income'&&new Date(x.entry_date)>=m.start&&new Date(x.entry_date)<m.end).reduce((a,x)=>a+Number(x.amount_egp||0),0));
+ const monthExpense=months.map(m=>posted.filter(x=>x.entry_type==='expense'&&new Date(x.entry_date)>=m.start&&new Date(x.entry_date)<m.end).reduce((a,x)=>a+Number(x.amount_egp||0),0));
+ const max=Math.max(1,...monthIncome,...monthExpense);
+ $('#financeMonthlyChart').innerHTML=months.map((m,i)=>'<div class="exec-bar-col"><span class="exec-bar-value">'+financeFmt(monthIncome[i])+'</span><div style="display:flex;align-items:flex-end;gap:3px;height:115px"><div class="exec-bar finance-income" title="إيرادات '+financeFmt(monthIncome[i])+'" style="height:'+Math.max(3,monthIncome[i]/max*105)+'px"></div><div class="exec-bar finance-expense" title="مصروفات '+financeFmt(monthExpense[i])+'" style="height:'+Math.max(3,monthExpense[i]/max*105)+'px"></div></div><span class="exec-bar-label">'+m.label+'</span></div>').join('');
+ const breakdown=[['اشتراكات محصلة',subIncome],['عمولات محصلة',commissions],['إيرادات أخرى',otherIncome-commissions],['مصروفات',expenses],['مبالغ اشتراكات معلقة',pending]];
+ const bmax=Math.max(1,...breakdown.map(x=>x[1]));
+ $('#financeBreakdown').innerHTML=breakdown.map(x=>'<div class="exec-hrow"><span>'+x[0]+'</span><div class="exec-track"><div class="exec-fill" style="width:'+Math.max(0,x[1])/bmax*100+'%"></div></div><strong>'+financeFmt(x[1])+'</strong></div>').join('');
+ const rows=financeRows.slice(0,30);
+ $('#financeEntriesList').innerHTML=rows.length?rows.map(x=>'<div class="finance-entry-row"><div><strong>'+safeText(x.description)+'</strong><div class="muted">'+safeText(x.category)+' · '+safeText(x.entry_date)+(x.reference?' · '+safeText(x.reference):'')+'</div></div><span class="finance-type '+x.entry_type+'">'+(x.entry_type==='income'?'إيراد':'مصروف')+'</span><strong>'+financeFmt(x.amount_egp)+' ج</strong><span class="pill">'+(x.status==='posted'?'مسجل':'ملغي')+'</span>'+(x.status==='posted'?'<button class="btn-light" data-finance-void="'+safeText(x.id)+'">إلغاء الحركة</button>':'—')+'</div>').join(''):'<div class="empty">لا توجد حركات مالية مسجلة بعد. ابدأ بإضافة أول مصروف أو عمولة محصلة.</div>';
+ access.classList.add('hidden');dash.classList.remove('hidden');$('#financeUpdatedAt').textContent='آخر تحديث: '+new Date().toLocaleString('ar-EG');
+}
+$('#financeRefreshBtn')?.addEventListener('click',loadFinanceDashboard);
+$('#financeEntryForm')?.addEventListener('submit',async e=>{
+ e.preventDefault();if(!cloudUser)return;
+ const form=e.currentTarget,d=Object.fromEntries(new FormData(form));const status=$('#financeFormStatus');status.textContent='جارٍ حفظ الحركة...';
+ const {error}=await cloud.from('platform_financial_entries').insert({entry_type:d.entry_type,category:d.category,description:d.description.trim(),amount_egp:Number(d.amount_egp),entry_date:d.entry_date,reference:d.reference||null});
+ if(error){status.textContent='لم يتم الحفظ: '+error.message;return;}
+ status.textContent='تم حفظ الحركة المالية.';form.reset();form.elements.entry_date.value=new Date().toISOString().slice(0,10);await loadFinanceDashboard();
+});
+$('#financeEntriesList')?.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-finance-void]');if(!b)return;if(!confirm('تأكيد إلغاء هذه الحركة؟ ستبقى محفوظة في السجل ولن تدخل في الحسابات.'))return;
+ b.disabled=true;const {error}=await cloud.from('platform_financial_entries').update({status:'void',updated_at:new Date().toISOString()}).eq('id',b.dataset.financeVoid);
+ if(error){alert('تعذر إلغاء الحركة: '+error.message);b.disabled=false;return;}await loadFinanceDashboard();
+});
+if($('#financeEntryForm'))$('#financeEntryForm').elements.entry_date.value=new Date().toISOString().slice(0,10);
+
 function egyptPhone(v){let n=String(v||'').replace(/[\s()-]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('0020'))return '+'+n.slice(2);if(n.startsWith('20'))return '+'+n;if(n.startsWith('0'))return '+20'+n.slice(1);if(n.startsWith('1'))return '+20'+n;return n;}
 function authStatus(msg,isError=false){$('#cloudAuthStatus').textContent=msg;$('#cloudAuthStatus').style.background=isError?'#fff0ed':'#fff7e6';}
 async function refreshCloudSession(){if(!cloud){authStatus('واجهة المنصة تعمل، لكن مكتبة الاتصال السحابي لم تُحمّل. تحقق من الإنترنت ثم حدّث الصفحة.',true);return;}const {data,error}=await cloud.auth.getSession();if(error){authStatus('تعذر فحص جلسة الدخول: '+error.message,true);return;}cloudUser=data.session?.user||null;if(cloudUser){authStatus('تم تسجيل الدخول برقم الهاتف: '+(cloudUser.phone||'حساب موثق')+'. يمكنك إنشاء ملف نشاطك السحابي.');$('#cloudOrgBox').classList.remove('hidden');await loadSubscriptionWorkspace();await loadWorkspaceData();}else{authStatus('الاتصال بالخدمة جاهز. أدخل رقم الهاتف لإرسال رمز التحقق.');$('#cloudOrgBox').classList.add('hidden');}}
@@ -232,7 +303,7 @@ let cloudOrganizations=[],cloudRequests=[],cloudOffers=[],myOrganizations=[];
 const accountLabels={company:'شركة',contractor:'مقاول',workshop:'ورشة',factory:'مصنع',professional:'مهني / صنايعي',supplier:'مورد',restaurant:'مطعم',delivery_company:'شركة توصيل',customer:'عميل'};
 const requestLabels={execution:'تنفيذ شغل',contracting:'مقاولة',manufacturing:'تصنيع',materials:'توريد خامات',worker:'طلب مهني / صنايعي',product:'شراء منتج',food_order:'طلب وجبة من مطعم',delivery:'طلب توصيل',other:'أخرى'};
 const requestTypeMap={'تنفيذ شغل':'execution','مقاولة':'contracting','تصنيع':'manufacturing','توريد خامات':'materials','طلب مهني / صنايعي':'worker','شراء منتج':'product','طلب وجبة من مطعم':'food_order','طلب توصيل':'delivery'};
-function go(id){$$('.page').forEach(p=>p.classList.toggle('active',p.id===id));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('#pageSubtitle').textContent=({home:'لوحة متابعة شبكة الأعمال',organizations:'تعريف الأنشطة ومقدمي الخدمات',sectorTools:'إدارة قوائم المطاعم ومناطق التوصيل',requests:'طلبات التنفيذ والتوريد',offers:'عروض الأسعار والمتابعة',professionals:'دليل المهنيين',admin:'إدارة المنصة والتقارير',subscriptions:'إدارة الباقات والاشتراكات',settings:'إعدادات الاتصال والحماية'})[id];window.scrollTo({top:0,behavior:'smooth'});render();}
+function go(id){$('.page').forEach(p=>p.classList.toggle('active',p.id===id));$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('#pageSubtitle').textContent=({home:'مركز قيادة المنصة ومؤشرات الأداء',organizations:'تعريف الأنشطة ومقدمي الخدمات',sectorTools:'إدارة قوائم المطاعم ومناطق التوصيل',requests:'طلبات التنفيذ والتوريد',offers:'عروض الأسعار والمتابعة',professionals:'دليل المهنيين',admin:'إدارة المنصة والتقارير',subscriptions:'إدارة الباقات والاشتراكات',finance:'الإيرادات والمصروفات وصافي الربح',settings:'إعدادات الاتصال والحماية'})[id];window.scrollTo({top:0,behavior:'smooth'});render();if(id==='finance')loadFinanceDashboard();}
 $$('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function toggle(id){$('#'+id).classList.toggle('hidden')}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
