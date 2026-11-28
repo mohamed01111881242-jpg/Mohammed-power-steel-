@@ -51,7 +51,7 @@
 </section>
 <section class="page active" id="home"><div class="welcome"><h1>أهلاً بك في منصة المعارف</h1><p>مكان واحد للشركات والمقاولين والورش والمصانع والمهنيين والموردين والمطاعم وشركات التوصيل والعملاء.</p></div>
 <div class="exec-hero"><div class="exec-kicker">MAAREF PLATFORM · OWNER COMMAND CENTER</div><div class="exec-title">مركز قيادة منصة المعارف</div><p class="exec-sub">نظرة شاملة على نبض المنصة: المستخدمون، الأنشطة، الطلبات، الصفقات، الاشتراكات، الإيرادات، وثقة المجتمع.</p><div class="exec-actions"><button type="button" id="dashboardRefreshBtn">↻ تحديث المؤشرات</button><span class="exec-kicker" id="dashboardUpdatedAt">بانتظار تحميل بيانات الإدارة</span></div></div>
-<div id="executiveDashboard"><div class="exec-lock">🔐 مؤشرات المالك تظهر بعد التحقق من صلاحية مدير المنصة.</div></div>
+<div id="executiveDashboard"><div class="exec-lock">🔐 لم يتم ربط حساب مالك المنصة بعد. سجّل الدخول أولًا، ثم أدخل رمز تفعيل المالك لمرة واحدة لتفعيل المؤشرات والإدارة المالية.<div class="formgrid" style="margin-top:12px"><div class="field"><label>رمز تفعيل المالك</label><input id="ownerClaimCode" type="password" autocomplete="off" placeholder="أدخل رمز التفعيل"></div><div class="field" style="align-self:end"><button type="button" id="claimOwnerBtn">تفعيل حساب المالك</button></div></div><div id="ownerClaimStatus" class="muted" style="margin-top:8px">هذه الخطوة تُستخدم مرة واحدة فقط لأول مالك.</div></div></div>
 <div class="grid">
 <div class="card"><span class="muted">الأنشطة المسجلة</span><div class="stat" id="statOrgs">0</div></div><div class="card"><span class="muted">طلبات الشغل</span><div class="stat" id="statRequests">0</div></div><div class="card"><span class="muted">عروض الأسعار</span><div class="stat" id="statOffers">0</div></div><div class="card"><span class="muted">طلبات مفتوحة</span><div class="stat" id="statOpen">0</div></div>
 </div>
@@ -194,7 +194,7 @@ async function loadExecutiveDashboard(){
  const host=$('#executiveDashboard');if(!host||!cloudUser)return;
  host.innerHTML='<div class="empty">جارٍ التحقق من صلاحية المالك وتحميل المؤشرات...</div>';
  const {data:sub,error:gateError}=await cloud.rpc('get_platform_subscription_dashboard');
- if(gateError||!sub){host.innerHTML='<div class="exec-lock">🔐 لا يوجد مدير منصة معتمد لهذا الحساب. تم التأكد أن قائمة مديري المنصة فارغة حاليًا؛ لذلك لا يمكن فتح المؤشرات المحمية قبل ربط حساب المالك بصلاحية الإدارة.</div>';$('#dashboardUpdatedAt').textContent='يلزم تفعيل حساب المالك';return;}
+ if(gateError||!sub){host.innerHTML='<div class="exec-lock">🔐 لم يتم ربط حساب مالك المنصة بهذا المستخدم بعد. أدخل رمز التفعيل الأولي مرة واحدة لربط حسابك كمالك وفتح المؤشرات والإدارة المالية.<div class="formgrid" style="margin-top:12px"><div class="field"><label>رمز تفعيل المالك</label><input id="ownerClaimCode" type="password" autocomplete="off" placeholder="أدخل رمز التفعيل"></div><div class="field" style="align-self:end"><button type="button" id="claimOwnerBtn">تفعيل حساب المالك</button></div></div><div id="ownerClaimStatus" class="muted" style="margin-top:8px">رمز الاستخدام لمرة واحدة فقط، ولا يعمل بعد تفعيل أول مالك.</div></div>';$('#dashboardUpdatedAt').textContent='يلزم تفعيل حساب المالك';return;}
  const specs=[
   ['profiles','id,created_at'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,is_approved,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
  ];
@@ -238,6 +238,17 @@ async function loadExecutiveDashboard(){
  if(unavailable.length)host.insertAdjacentHTML('beforeend','<div class="notice">بعض المؤشرات غير متاحة بسبب صلاحيات الجداول أو عدم تهيئتها: '+unavailable.join('، ')+' — لن نعرض لها أرقامًا تخمينية.</div>');
 }
 $('#dashboardRefreshBtn')?.addEventListener('click',loadExecutiveDashboard);
+$('#executiveDashboard')?.addEventListener('click',async e=>{
+ const b=e.target.closest('#claimOwnerBtn');if(!b)return;
+ if(!cloudUser){$('#ownerClaimStatus').textContent='سجّل الدخول أولًا من لوحة الإدارة.';return;}
+ const code=$('#ownerClaimCode')?.value?.trim();if(!code){$('#ownerClaimStatus').textContent='أدخل رمز التفعيل أولًا.';return;}
+ b.disabled=true;b.textContent='جارٍ تفعيل المالك...';
+ const {data,error}=await cloud.rpc('claim_platform_admin',{p_code:code});
+ if(error){$('#ownerClaimStatus').textContent='لم يتم التفعيل: '+error.message;b.disabled=false;b.textContent='تفعيل حساب المالك';return;}
+ $('#ownerClaimStatus').textContent='تم تفعيل حساب المالك بنجاح. جارٍ تحميل لوحة القيادة...';
+ await loadExecutiveDashboard();
+});
+
 
 
 const financeFmt=n=>Number(n||0).toLocaleString('ar-EG',{maximumFractionDigits:2});
@@ -247,7 +258,7 @@ async function loadFinanceDashboard(){
  if(!cloudUser){access.textContent='سجّل الدخول بحساب مالك المنصة لعرض الحسابات المالية.';access.classList.remove('hidden');dash.classList.add('hidden');return;}
  access.textContent='جارٍ التحقق من صلاحية المالك...';access.classList.remove('hidden');dash.classList.add('hidden');
  const {data:gate,error:gateError}=await cloud.rpc('get_platform_subscription_dashboard');
- if(gateError||!gate){access.textContent='لا توجد صلاحية مدير منصة لهذا الحساب. لا يمكن عرض أو تعديل الحسابات المالية.';$('#financeUpdatedAt').textContent='الصلاحية غير متاحة';return;}
+ if(gateError||!gate){access.innerHTML='لا توجد صلاحية مدير منصة لهذا الحساب. فعّل حساب المالك من قسم «مركز القيادة» أولًا ثم افتح الإدارة المالية.';$('#financeUpdatedAt').textContent='الصلاحية غير متاحة';return;}
  const [payRes,entryRes]=await Promise.all([
   cloud.from('subscription_payments').select('id,amount_egp,status,paid_at,created_at').order('paid_at',{ascending:false}).limit(1500),
   cloud.from('platform_financial_entries').select('id,entry_type,category,description,amount_egp,entry_date,status,reference,created_at').order('entry_date',{ascending:false}).limit(1500)
