@@ -1,4 +1,4 @@
-name: Deploy Arabic platform preview to GitHub Pages
+name: Deploy Arabic platform to GitHub Pages
 
 on:
   push:
@@ -23,16 +23,21 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Prepare site
+
+      - name: Prepare complete site
         run: |
           mkdir -p _site
-          cp index.html _site/index.html
+          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' --exclude='supabase' --exclude='database' --exclude='docs' --exclude='README.md' --exclude='WHATSAPP_LOGIN_SETUP.md' ./ _site/
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+          name: github-pages
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
