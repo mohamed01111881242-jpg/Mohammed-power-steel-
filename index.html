@@ -86,7 +86,7 @@
 <div class="card hidden" id="requestFormBox"><h3>تفاصيل الطلب</h3><form id="requestForm" class="formgrid">
 <div class="field"><label>نوع الطلب</label><select name="kind" required><option value="">اختر</option><option>تنفيذ شغل</option><option>مقاولة</option><option>تصنيع</option><option>توريد خامات</option><option>طلب مهني / صنايعي</option><option>شراء منتج</option><option>طلب وجبة من مطعم</option><option>طلب توصيل</option></select></div><div class="field"><label>النشاط صاحب الطلب</label><select name="organizationId" id="requestOrganizationSelect" required><option value="">سجّل الدخول وسجّل نشاطك أولًا</option></select></div><div class="field"><label>مكان التنفيذ</label><input name="city" required></div><div class="field"><label>الميزانية من (اختياري)</label><input name="budgetMin" type="number" min="0"></div><div class="field"><label>الميزانية إلى (اختياري)</label><input name="budgetMax" type="number" min="0"></div><div class="field full"><label>وصف الشغل والمقاسات والكميات</label><textarea name="details" required></textarea></div><div class="field full"><button type="submit">حفظ الطلب</button></div></form></div>
 <div id="requestList" class="list"></div></section>
-<section class="page" id="offers"><div class="section-head"><h2>عروض الأسعار</h2><button onclick="toggle('offerFormBox')">+ تسجيل عرض</button></div><div class="card hidden" id="offerFormBox"><h3>عرض سعر جديد</h3><form id="offerForm" class="formgrid"><div class="field"><label>رقم الطلب</label><select name="requestId" id="offerRequestSelect" required></select></div><div class="field"><label>النشاط مقدم العرض</label><select name="providerOrganizationId" id="offerOrganizationSelect" required><option value="">اختر نشاطك</option></select></div><div class="field"><label>السعر بالجنيه</label><input name="price" type="number" min="0" required></div><div class="field"><label>مدة التنفيذ بالأيام</label><input name="days" type="number" min="0"></div><div class="field full"><label>تفاصيل العرض</label><textarea name="details" required></textarea></div><div class="field full"><button type="submit">حفظ العرض</button></div></form></div><div id="offerList" class="list"></div></section>
+<section class="page" id="offers"><div class="section-head"><h2>عروض الأسعار</h2><button onclick="toggle('offerFormBox')">+ تسجيل عرض</button></div><div class="card hidden" id="offerFormBox"><h3>عرض سعر جديد</h3><form id="offerForm" class="formgrid"><div class="field"><label>رقم الطلب</label><select name="requestId" id="offerRequestSelect" required></select></div><div class="field"><label>النشاط مقدم العرض</label><select name="providerOrganizationId" id="offerOrganizationSelect" required><option value="">اختر نشاطك</option></select></div><div class="field"><label>السعر بالجنيه</label><input name="price" type="number" min="0" required></div><div class="field"><label>مدة التنفيذ بالأيام</label><input name="days" type="number" min="0"></div><div class="field full"><label>تفاصيل العرض</label><textarea name="details" required></textarea></div><div class="field full"><button type="submit">حفظ العرض</button></div></form></div><div id="offerList" class="list"></div><div class="card" style="margin-top:16px"><h3>المفاوض الذكي — متابعة الاتفاق</h3><p class="muted">المفاوض يساعد العميل ومقدم الخدمة على التفاهم في السعر والمواصفات والمدة. لا يصبح الاتفاق نهائيًا إلا بعد موافقة الطرفين على نفس الشروط.</p><button type="button" class="btn-light" id="refreshNegotiationsBtn">تحديث التفاوض</button><div id="negotiationWorkspace" class="list" style="margin-top:12px"><div class="empty">سجّل الدخول لعرض جلسات التفاوض المرتبطة بعروضك وطلباتك.</div></div></div></section>
 <section class="page" id="professionals"><div class="section-head"><h2>المهنيون ومقدمو الخدمات</h2><button class="btn-light" onclick="go('organizations')">إضافة مهني</button></div><p class="muted">هذا القسم يعرض الحسابات المسجلة بنوع «مهني / صنايعي» أو «ورشة» أو «مصنع» لتسهيل الوصول لمقدم الخدمة.</p><div id="professionalList" class="list"></div></section>
 <section class="page" id="admin"><div class="section-head"><h2>الإدارة والتقارير</h2><button class="btn-light" onclick="exportData()">تصدير البيانات الظاهرة</button></div><div class="grid"><div class="card"><span class="muted">كل الأنشطة</span><div class="stat" id="adminOrgs">0</div></div><div class="card"><span class="muted">كل الطلبات</span><div class="stat" id="adminRequests">0</div></div><div class="card"><span class="muted">العروض المقبولة</span><div class="stat" id="adminAccepted">0</div></div></div><div class="card"><h3>إجراءات الإدارة</h3><p class="muted">اعتماد العروض والاتفاقات والالتزامات المالية يجب أن يتم بموافقة صاحب الصلاحية، وليس تلقائيًا.</p><button class="btn-light" onclick="exportData()">تنزيل البيانات الظاهرة JSON</button> <span class="muted">البيانات الأساسية محفوظة سحابيًا ولا تُمسح من هذه الشاشة.</span></div></section>
 <section class="page" id="subscriptions">
@@ -232,6 +232,7 @@ async function loadWorkspaceData(){
  myOrganizations=(d.data||[]).filter(x=>x.organizations).map(x=>({...x.organizations,role:x.member_role}));
  render();
  await loadSectorTools();
+ await loadNegotiationWorkspace();
 }
 function render(){
  const orgs=cloudOrganizations,reqs=cloudRequests,offers=cloudOffers;
@@ -305,5 +306,43 @@ $('#admin').insertAdjacentHTML('beforeend','<div class="card"><h3>مراجعة �
 async function loadPendingReviews(){const host=$('#pendingReviewsList');host.textContent='جارٍ تحميل التقييمات...';const {data,error}=await cloud.from('provider_reviews').select('id,rating,review_text,created_at,provider:organizations!provider_reviews_provider_organization_id_fkey(name),request:service_requests!provider_reviews_request_id_fkey(title)').eq('moderation_status','pending').order('created_at',{ascending:true});if(error){host.textContent='تعذر تحميل التقييمات. تأكد من الدخول بحساب مدير المنصة: '+error.message;return;}host.innerHTML=(data||[]).length?(data||[]).map(r=>'<div class="item"><div><strong>'+esc(r.provider?.name||'مقدم خدمة')+'</strong><p>'+esc(r.request?.title||'طلب مكتمل')+' · '+('★'.repeat(r.rating))+'</p><p>'+esc(r.review_text||'بدون تعليق')+'</p><p class="muted">'+dateLabel(r.created_at)+'</p></div><div><button class="btn-light" data-review-action="approved" data-review-id="'+esc(r.id)+'">اعتماد</button> <button class="btn-light" data-review-action="rejected" data-review-id="'+esc(r.id)+'">رفض</button></div></div>').join(''):empty('لا توجد تقييمات معلقة حاليًا.');}
 $('#loadPendingReviewsBtn').addEventListener('click',loadPendingReviews);
 $('#pendingReviewsList').addEventListener('click',async e=>{const b=e.target.closest('[data-review-action]');if(!b)return;const approve=b.dataset.reviewAction==='approved';if(!confirm(approve?'اعتماد هذا التقييم وإظهاره للعملاء؟':'رفض هذا التقييم وإبقاؤه مخفيًا؟'))return;const {error}=await cloud.from('provider_reviews').update({moderation_status:approve?'approved':'rejected',is_approved:approve,updated_at:new Date().toISOString()}).eq('id',b.dataset.reviewId);if(error){alert('تعذر تحديث التقييم: '+error.message);return;}await loadPendingReviews();});
+
+async function loadNegotiationWorkspace(){
+ const host=$('#negotiationWorkspace');if(!host)return;
+ if(!cloudUser){host.innerHTML=empty('سجّل الدخول أولًا لعرض التفاوض.');return;}
+ host.textContent='جارٍ تحميل جلسات التفاوض...';
+ const {data:sessions,error}=await cloud.from('negotiation_sessions').select('id,request_id,offer_id,customer_organization_id,provider_organization_id,status,updated_at').order('updated_at',{ascending:false}).limit(40);
+ if(error){host.innerHTML=empty('تعذر تحميل جلسات التفاوض: '+esc(error.message));return;}
+ if(!sessions?.length){host.innerHTML=empty('لا توجد جلسات تفاوض بعد. عند إرسال عرض سعر جديد ستنشأ جلسة تلقائيًا.');return;}
+ const ids=sessions.map(x=>x.id),requestIds=[...new Set(sessions.map(x=>x.request_id))];
+ const [msgs,agreements,requests]=await Promise.all([
+  cloud.from('negotiation_messages').select('id,session_id,sender_type,audience,body,created_at').in('session_id',ids).order('created_at',{ascending:true}),
+  cloud.from('deal_agreements').select('id,session_id,final_terms,status,customer_approved_at,provider_approved_at').in('session_id',ids),
+  cloud.from('service_requests').select('id,title,request_type,city').in('id',requestIds)
+ ]);
+ if(msgs.error){host.innerHTML=empty('تعذر تحميل رسائل التفاوض: '+esc(msgs.error.message));return;}
+ const statusLabels={negotiating:'جاري التفاوض',awaiting_customer_approval:'بانتظار موافقة العميل',awaiting_provider_approval:'بانتظار موافقة مقدم الخدمة',agreed:'اتفاق مكتمل',cancelled:'ملغي',human_review:'يحتاج تدخل فريق المنصة'};
+ host.innerHTML=sessions.map(session=>{
+  const req=(requests.data||[]).find(x=>x.id===session.request_id),thread=(msgs.data||[]).filter(x=>x.session_id===session.id),agreement=(agreements.data||[]).find(x=>x.session_id===session.id);
+  const chat=thread.length?thread.map(m=>'<div class="item"><div><strong>'+({customer:'العميل',provider:'مقدم الخدمة',ai:'المفاوض الذكي',system:'النظام'}[m.sender_type]||'رسالة')+'</strong><p>'+esc(m.body)+'</p><span class="muted">'+dateLabel(m.created_at)+'</span></div></div>').join(''):'<p class="muted">ابدأ المحادثة مع المفاوض الذكي.</p>';
+  const terms=agreement?'<div class="notice"><strong>الشروط المقترحة</strong><pre style="white-space:pre-wrap;direction:rtl;font-family:Tahoma">'+esc(JSON.stringify(agreement.final_terms,null,2))+'</pre><p class="muted">حالة الموافقة: '+esc(agreement.status==='agreed'?'اتفاق نهائي':agreement.status==='partially_approved'?'وافق طرف واحد':'بانتظار الموافقة')+'</p>'+(agreement.status!=='agreed'&&agreement.status!=='rejected'?'<button type="button" class="btn-light" data-approve-agreement="'+esc(agreement.id)+'">أوافق على الشروط النهائية</button>':'')+'</div>':'';
+  return '<article class="card"><div class="section-head"><strong>'+esc(req?.title||req?.request_type||'طلب خدمة')+'</strong><span class="pill">'+(statusLabels[session.status]||esc(session.status))+'</span></div><p class="muted">'+esc(req?.city||'')+'</p><div class="list">'+chat+'</div>'+terms+(session.status!=='agreed'&&session.status!=='cancelled'?'<form class="formgrid" data-negotiation-form="'+esc(session.id)+'" style="margin-top:12px"><div class="field full"><label>اكتب رسالتك للمفاوض الذكي</label><textarea name="message" required maxlength="4000" placeholder="مثال: السعر أعلى من ميزانيتي، هل يمكن الوصول لحل وسط؟"></textarea></div><div class="field full"><button type="submit">إرسال للمفاوض الذكي</button></div></form>':'')+'</article>';
+ }).join('');
+}
+async function handleNegotiationAction(e){
+ const approve=e.target.closest('[data-approve-agreement]');
+ if(approve){if(!confirm('هل تؤكد موافقتك على جميع الشروط المكتوبة؟ لا يكتمل الاتفاق إلا بموافقة الطرف الآخر أيضًا.'))return;approve.disabled=true;const {data,error}=await cloud.rpc('approve_negotiated_agreement',{p_agreement_id:approve.dataset.approveAgreement});if(error){alert('تعذر تسجيل الموافقة: '+error.message);approve.disabled=false;return;}alert(data==='agreed'?'تم الاتفاق النهائي بموافقة الطرفين.':'تم تسجيل موافقتك، وننتظر موافقة الطرف الآخر.');await loadNegotiationWorkspace();}
+}
+async function submitNegotiationMessage(e){
+ const form=e.target.closest('[data-negotiation-form]');if(!form)return;e.preventDefault();
+ const message=new FormData(form).get('message');const button=form.querySelector('button[type="submit"]');button.disabled=true;button.textContent='المفاوض يراجع الرسالة...';
+ const {data,error}=await cloud.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message}});
+ if(error){alert('المفاوض الذكي غير متاح حاليًا: '+error.message);button.disabled=false;button.textContent='إرسال للمفاوض الذكي';return;}
+ await loadNegotiationWorkspace();
+}
+$('#refreshNegotiationsBtn').addEventListener('click',loadNegotiationWorkspace);
+$('#negotiationWorkspace').addEventListener('click',handleNegotiationAction);
+$('#negotiationWorkspace').addEventListener('submit',submitNegotiationMessage);
+
 </script></body></html>
 <!-- Trigger GitHub Pages branch deployment -->
