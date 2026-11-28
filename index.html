@@ -177,9 +177,9 @@ async function loadExecutiveDashboard(){
  const {data:sub,error:gateError}=await cloud.rpc('get_platform_subscription_dashboard');
  if(gateError||!sub){host.innerHTML='<div class="exec-lock">🔐 هذه المؤشرات خاصة بمالك المنصة أو مديرها المعتمد. الحساب الحالي لا يملك صلاحية عرض بيانات الإدارة الكاملة.</div>';$('#dashboardUpdatedAt').textContent='الصلاحية غير متاحة';return;}
  const specs=[
-  ['profiles','id'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
+  ['profiles','id,created_at'],['organizations','id,account_type,created_at'],['service_requests','id,status,request_type,created_at'],['offers','id,status,price,created_at'],['provider_reviews','id,rating,moderation_status,created_at'],['negotiation_sessions','id,status,created_at'],['subscription_payments','id,amount_egp,status,paid_at'],['activity_log','id,event_type,summary,created_at']
  ];
- const [results,countResults]=await Promise.all([Promise.all(specs.map(([table,fields])=>cloud.from(table).select(fields).limit(1500))),Promise.all(specs.map(([table])=>cloud.from(table).select('id',{count:'exact',head:true})))]);
+ const [results,countResults]=await Promise.all([Promise.all(specs.map(([table,fields])=>cloud.from(table).select(fields).order(table==='subscription_payments'?'paid_at':'created_at',{ascending:false,nullsFirst:false}).limit(1500))),Promise.all(specs.map(([table])=>cloud.from(table).select('id',{count:'exact',head:true})))]);
  const data={},exactCounts={};specs.forEach(([table],i)=>{data[table]=results[i].error?null:(results[i].data||[]);exactCounts[table]=countResults[i].error?null:countResults[i].count;});
  const count=(table)=>exactCounts[table]===null?'—':Number(exactCounts[table]||0).toLocaleString('ar-EG');
  const fmt=n=>Number(n||0).toLocaleString('ar-EG');
