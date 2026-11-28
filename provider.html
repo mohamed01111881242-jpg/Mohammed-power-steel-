@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b2c"><title>منصة المعارف | بوابة مقدم الخدمة</title>
+<style>
+:root{--green:#176b4a;--dark:#123b2c;--bg:#f4f8f5;--ink:#1c2c23;--muted:#6c7c73;--line:#e1eae4;--gold:#d6ad59}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}button,input,select,textarea{font:inherit}button{border:0;border-radius:11px;padding:10px 15px;background:var(--green);color:#fff;font-weight:bold;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.light{background:#e8f2ec;color:var(--green)}.layout{display:grid;grid-template-columns:235px 1fr;min-height:100vh}.side{background:var(--dark);color:white;padding:22px 16px}.brand{font-size:20px;font-weight:bold;margin-bottom:8px}.brand small{display:block;font-size:11px;color:#c3d9cc;font-weight:normal}.nav{display:grid;gap:7px;margin-top:24px}.nav button{text-align:right;background:transparent;color:#dce9e1;font-weight:normal}.nav button.active,.nav button:hover{background:#24513c}.side-note{font-size:11px;color:#b6cdbf;margin-top:30px}.main{min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:13px 24px;display:flex;justify-content:space-between;align-items:center}.top small,.muted{color:var(--muted);font-size:13px}.wrap{max-width:1180px;margin:auto;padding:22px}.welcome{background:linear-gradient(115deg,#123b2c,#28734f);color:white;padding:24px;border-radius:18px;margin-bottom:18px}.welcome h1{margin:0 0 5px;font-size:27px}.welcome p{margin:0;color:#e0eee5}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:13px;margin:15px 0}.card{background:white;border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px;box-shadow:0 4px 16px #123b2c08}.stat{font-size:27px;font-weight:bold;color:var(--green)}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:7px 0 13px}.head h2{font-size:20px;margin:0}.field{display:flex;flex-direction:column;gap:5px}.field label{font-weight:bold;font-size:13px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:white}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.full{grid-column:1/-1}.notice{background:#fff8e8;border:1px solid #f0e1bc;border-radius:11px;padding:11px;margin:12px 0;font-size:13px}.list{display:grid;gap:11px}.item{border:1px solid var(--line);border-radius:12px;padding:13px;background:white}.pill{display:inline-block;background:#e7f2eb;color:var(--green);padding:3px 9px;border-radius:30px;font-size:11px}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:13px;background:white}.hidden{display:none!important}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chat{background:#f7faf8;border-radius:10px;padding:10px;margin:8px 0}.chat p{margin:3px 0}.top-actions{display:flex;gap:8px;align-items:center}@media(max-width:780px){.layout{grid-template-columns:1fr}.side{padding:12px}.nav{display:flex;overflow:auto;margin-top:10px}.nav button{white-space:nowrap;padding:8px 11px}.side-note{display:none}.wrap{padding:14px}.top{padding:12px 14px}.formgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side"><div class="brand">🛠 منصة المعارف<small>بوابة مقدم الخدمة</small></div>
+<nav class="nav"><button class="active" data-page="home">الرئيسية</button><button data-page="requests">الطلبات المناسبة</button><button data-page="offers">عروضي</button><button data-page="negotiation">التفاوض الذكي</button><button data-page="profile">ملف نشاطي</button></nav>
+<div class="side-note">هذه مساحة العمل الخاصة بمقدم الخدمة، وليست لوحة إدارة المنصة.</div></aside>
+<main class="main"><header class="top"><div><strong>مساحة مقدم الخدمة</strong><br><small id="subtitle">طلبات مناسبة، عروض أسعار، واتفاقات</small></div><div class="top-actions"><span class="pill">حساب مقدم خدمة</span><button class="light" id="signOut" type="button">خروج</button></div></header>
+<div class="wrap">
+<section class="card" id="authCard"><h3>دخول مقدم الخدمة</h3><p class="muted">سجّل الدخول برقم الهاتف ورمز التحقق. يلزم تفعيل رسائل SMS في إعدادات المنصة.</p><div class="formgrid"><div class="field"><label>رقم الهاتف المصري</label><input id="phone" inputmode="tel" placeholder="01012345678"></div><div class="field" style="align-self:end"><button id="sendOtp" type="button">إرسال رمز التحقق</button></div><div class="field"><label>رمز التحقق</label><input id="otp" inputmode="numeric" placeholder="رمز SMS"></div><div class="field" style="align-self:end"><button class="light" id="verifyOtp" type="button">تأكيد الدخول</button></div></div><div id="authStatus" class="notice">جارٍ الاتصال بالمنصة...</div></section>
+<div id="workspace" class="hidden">
+<section class="welcome"><h1 id="welcomeTitle">أهلاً بك في مساحة عملك</h1><p>هنا هتلاقي الطلبات المناسبة لنشاطك، وتبعت عروضك، وتتابع التفاوض لحد الاتفاق النهائي.</p></section>
+<section class="grid"><div class="card"><span class="muted">أنشطتي</span><div class="stat" id="statOrgs">0</div></div><div class="card"><span class="muted">طلبات مناسبة</span><div class="stat" id="statRequests">0</div></div><div class="card"><span class="muted">عروضي المرسلة</span><div class="stat" id="statOffers">0</div></div><div class="card"><span class="muted">جلسات تفاوض</span><div class="stat" id="statNegotiations">0</div></div></section>
+<section class="page active" id="home"><div class="card"><h3>ابدأ من هنا</h3><p class="muted">اختار نشاطك، اعرض الطلبات المطابقة، وقدّم سعر ومدة تنفيذ واضحة. المفاوض الذكي يساعدك أنت والعميل في الوصول لاتفاق، لكن الموافقة النهائية لازم تصدر من الطرفين.</p><div class="field"><label>النشاط الذي تعمل به الآن</label><select id="homeOrg"></select></div><div class="actions"><button data-go="requests">شوف الطلبات المناسبة</button><button class="light" data-go="offers">تابع عروضي</button></div></div><div class="head"><h2>أحدث الطلبات المناسبة</h2><button class="light" id="homeRefresh">تحديث</button></div><div id="homeRequests" class="list"></div></section>
+<section class="page" id="requests"><div class="head"><h2>الطلبات المناسبة لنشاطك</h2><button class="light" id="refreshMatches">تحديث الطلبات</button></div><div class="card"><div class="field"><label>اختر النشاط</label><select id="requestOrg"></select></div><p class="muted">تُحدد المطابقة حسب تخصص النشاط والمنطقة وفق بيانات الطلب.</p></div><div id="matchedRequests" class="list"><div class="empty">اختر نشاطًا لعرض الطلبات المناسبة.</div></div></section>
+<section class="page" id="offers"><div class="head"><h2>عروض الأسعار التي أرسلتها</h2><button class="light" id="refreshOffers">تحديث</button></div><div id="myOffers" class="list"></div></section>
+<section class="page" id="negotiation"><div class="head"><h2>المفاوض الذكي</h2><button class="light" id="refreshNegotiations">تحديث الجلسات</button></div><div class="notice">اكتب للمفاوض ما تريد توضيحه أو التفاوض عليه. رسالتك خاصة بك افتراضيًا، ولا تُشارك مع العميل إلا إذا اخترت السماح بالمشاركة. الاتفاق لا يصبح نهائيًا إلا بعد موافقة الطرفين على نفس الشروط.</div><div id="negotiationList" class="list"></div></section>
+<section class="page" id="profile"><div class="head"><h2>ملف نشاطي</h2></div><div id="profileList" class="list"></div></section>
+</div></div></main></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://llkxjglbxxsrhagjfhqx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_Z4CXAYTHYLxM5jHWC42blQ_vMIJYqAY";
+const db=window.supabase?.createClient?.(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY)||null;
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const providerTypes=['company','contractor','workshop','factory','professional','supplier','restaurant','delivery_company'];
+const typeNames={company:'شركة',contractor:'مقاول',workshop:'ورشة',factory:'مصنع',professional:'مهني / صنايعي',supplier:'مورد',restaurant:'مطعم',delivery_company:'شركة توصيل'};
+let user=null,orgs=[],matches=[],offers=[],sessions=[];
+function phoneFormat(v){let n=String(v||'').replace(/[\s()-]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('0020'))return '+'+n.slice(2);if(n.startsWith('20'))return '+'+n;if(n.startsWith('0'))return '+20'+n.slice(1);if(n.startsWith('1'))return '+20'+n;return n;}
+function status(msg,bad=false){$('#authStatus').textContent=msg;$('#authStatus').style.background=bad?'#fff0ed':'#fff8e8';}
+function go(page){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===page));$('#subtitle').textContent=({home:'ملخص نشاطك',requests:'الطلبات المطابقة لتخصصك ومنطقتك',offers:'عروض الأسعار المرسلة',negotiation:'التفاوض والاتفاقات',profile:'بيانات أنشطتك'}[page]||'مساحة مقدم الخدمة');}
+function ownIds(){return orgs.map(o=>o.id);}
+function fillOrgs(){const opts=orgs.map(o=>'<option value="'+esc(o.id)+'">'+esc(o.name)+' — '+esc(typeNames[o.account_type]||o.account_type)+'</option>').join('');['homeOrg','requestOrg'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=opts||'<option value="">لا توجد أنشطة مقدمي خدمة مرتبطة بحسابك</option>';});}
+async function loadAll(){
+ if(!user)return;
+ const {data,error}=await db.from('memberships').select('organization_id,member_role,organizations(id,name,account_type,description,city,specialties,service_areas,is_verified)').eq('user_id',user.id);
+ if(error){status('تعذر تحميل أنشطتك: '+error.message,true);return;}
+ orgs=(data||[]).filter(x=>x.organizations&&providerTypes.includes(x.organizations.account_type)).map(x=>({...x.organizations,role:x.member_role}));
+ $('#authCard').classList.add('hidden');$('#workspace').classList.remove('hidden');
+ if(!orgs.length){$('#welcomeTitle').textContent='سجّل نشاطك كمقدم خدمة أولًا';$('#profileList').innerHTML='<div class="empty">لا يوجد نشاط مقدم خدمة مرتبط بهذا الحساب. يمكنك تسجيل ورشة أو شركة أو مهني أو مطعم أو شركة توصيل من صفحة <a href="./">تسجيل الأنشطة</a>، ثم العودة إلى هنا.</div>';fillOrgs();return;}
+ $('#welcomeTitle').textContent='أهلاً بك، '+orgs[0].name;fillOrgs();
+ await Promise.all([loadMatches(),loadOffers(),loadNegotiations()]);
+ renderProfile();
+}
+async function loadMatches(){
+ const id=$('#requestOrg')?.value||$('#homeOrg')?.value;const host=$('#matchedRequests');
+ if(!id){if(host)host.innerHTML='<div class="empty">اختر نشاطًا أولًا.</div>';return;}
+ if(host)host.innerHTML='<div class="empty">جارٍ البحث عن طلبات مناسبة...</div>';
+ const {data,error}=await db.rpc('match_service_requests_for_provider',{p_provider_organization_id:id});
+ if(error){if(host)host.innerHTML='<div class="empty">تعذر تحميل الطلبات: '+esc(error.message)+'</div>';return;}
+ matches=data||[];$('#statRequests').textContent=matches.length;
+ const html=matches.length?matches.map(r=>'<article class="card"><div class="head"><strong>'+esc(r.request_title||'طلب خدمة')+'</strong><span class="pill">'+(r.match_reason==='same_city'?'نفس المنطقة':'تخصص مناسب')+'</span></div><p>'+esc(r.request_details||'')+'</p><p class="muted">📍 '+esc(r.request_city||'')+'</p><button data-create-offer="'+esc(r.request_id)+'">قدّم عرض سعر</button></article>').join(''):'<div class="empty">لا توجد طلبات مطابقة حاليًا. راجع تخصصات نشاطك ومناطق الخدمة.</div>';
+ if(host)host.innerHTML=html;$('#homeRequests').innerHTML=matches.slice(0,3).map(r=>'<div class="item"><strong>'+esc(r.request_title||'طلب خدمة')+'</strong><p class="muted">'+esc(r.request_city||'')+'</p></div>').join('')||'<div class="empty">لا توجد طلبات جديدة مناسبة.</div>';
+}
+async function createOffer(requestId){
+ const orgId=$('#requestOrg').value||$('#homeOrg').value;
+ const req=matches.find(x=>x.request_id===requestId);if(!orgId||!req){alert('اختر نشاطك وحدّث الطلبات أولًا.');return;}
+ const price=prompt('اكتب السعر بالجنيه المصري:');if(price===null)return;
+ const n=Number(price);if(!Number.isFinite(n)||n<0){alert('اكتب سعرًا صحيحًا.');return;}
+ const days=prompt('مدة التنفيذ بالأيام (اختياري):','');if(days===null)return;
+ const details=prompt('اشرح تفاصيل العرض والخامات أو الخدمة والضمان:','');if(details===null||!details.trim())return;
+ const {error}=await db.from('offers').insert({request_id:requestId,provider_organization_id:orgId,created_by:user.id,price:n,details:details.trim(),estimated_days:days.trim()?Number(days):null,status:'submitted'});
+ if(error){alert('تعذر إرسال العرض: '+error.message);return;}
+ alert('تم إرسال عرضك. ستظهر جلسة تفاوض مرتبطة به عند تحديث الصفحة.');await loadOffers();await loadNegotiations();
+}
+async function loadOffers(){
+ const ids=ownIds();if(!ids.length){$('#myOffers').innerHTML='<div class="empty">لا توجد أنشطة مرتبطة بحسابك.</div>';return;}
+ const {data,error}=await db.from('offers').select('id,request_id,provider_organization_id,price,details,estimated_days,status,created_at,request:service_requests(title,city,status)').in('provider_organization_id',ids).order('created_at',{ascending:false}).limit(100);
+ if(error){$('#myOffers').innerHTML='<div class="empty">تعذر تحميل عروضك: '+esc(error.message)+'</div>';return;}
+ offers=data||[];$('#statOffers').textContent=offers.length;
+ $('#myOffers').innerHTML=offers.length?offers.map(o=>'<article class="card"><div class="head"><strong>'+esc(o.request?.title||'طلب خدمة')+'</strong><span class="pill">'+({submitted:'مرسل للعميل',accepted:'مقبول',rejected:'مرفوض',withdrawn:'مسحوب'}[o.status]||esc(o.status))+'</span></div><strong>'+Number(o.price).toLocaleString('ar-EG')+' جنيه</strong><p>'+esc(o.estimated_days??'حسب الاتفاق')+' يوم · '+esc(o.details)+'</p><p class="muted">'+esc(o.request?.city||'')+'</p></article>').join(''):'<div class="empty">لم ترسل عروض أسعار بعد. افتح الطلبات المناسبة وابدأ بأول عرض.</div>';
+}
+async function loadNegotiations(){
+ const ids=ownIds();if(!ids.length)return;
+ const {data,error}=await db.from('negotiation_sessions').select('id,request_id,offer_id,provider_organization_id,status,updated_at').in('provider_organization_id',ids).order('updated_at',{ascending:false}).limit(50);
+ if(error){$('#negotiationList').innerHTML='<div class="empty">تعذر تحميل جلسات التفاوض: '+esc(error.message)+'</div>';return;}
+ sessions=data||[];$('#statNegotiations').textContent=sessions.length;
+ if(!sessions.length){$('#negotiationList').innerHTML='<div class="empty">لا توجد جلسات بعد. عندما ترسل عرض سعر جديدًا تُنشأ جلسة تفاوض مرتبطة به.</div>';return;}
+ const sids=sessions.map(x=>x.id),rids=[...new Set(sessions.map(x=>x.request_id))];
+ const [m,a,r]=await Promise.all([db.from('negotiation_messages').select('id,session_id,sender_type,body,created_at').in('session_id',sids).order('created_at',{ascending:true}),db.from('deal_agreements').select('id,session_id,final_terms,status').in('session_id',sids),db.from('service_requests').select('id,title,city').in('id',rids)]);
+ $('#negotiationList').innerHTML=sessions.map(s=>{
+ const req=(r.data||[]).find(x=>x.id===s.request_id),thread=(m.data||[]).filter(x=>x.session_id===s.id),ag=(a.data||[]).find(x=>x.session_id===s.id);
+ const messages=thread.map(x=>'<div class="chat"><strong>'+({customer:'العميل',provider:'أنت',ai:'المفاوض الذكي',system:'النظام'}[x.sender_type]||'رسالة')+'</strong><p>'+esc(x.body)+'</p></div>').join('')||'<p class="muted">ابدأ التفاوض مع المساعد الذكي.</p>';
+ const agreement=ag?'<div class="notice"><strong>الشروط النهائية المقترحة</strong><pre style="white-space:pre-wrap;font-family:Tahoma">'+esc(JSON.stringify(ag.final_terms,null,2))+'</pre><p>حالة الاتفاق: '+esc(ag.status)+'</p>'+(ag.status!=='agreed'&&ag.status!=='rejected'?'<button class="light" data-approve="'+esc(ag.id)+'">أوافق على الشروط</button>':'')+'</div>':'';
+ const form=s.status!=='agreed'&&s.status!=='cancelled'?'<form data-neg-form="'+esc(s.id)+'" class="formgrid"><div class="field full"><label>رسالتك للمفاوض الذكي</label><textarea name="message" required maxlength="4000" placeholder="مثال: أقدر أنفذ بالخامة دي بس محتاج تعديل بسيط في السعر"></textarea><label class="muted"><input type="checkbox" name="share" value="yes"> أسمح بمشاركة هذه الرسالة مع العميل</label></div><div class="field full"><button>إرسال للمفاوض</button></div></form>':'';
+ return '<article class="card"><div class="head"><strong>'+esc(req?.title||'طلب خدمة')+'</strong><span class="pill">'+(s.status==='agreed'?'اتفاق مكتمل':s.status==='cancelled'?'ملغي':'جاري التفاوض')+'</span></div><p class="muted">'+esc(req?.city||'')+'</p>'+messages+agreement+form+'</article>';
+ }).join('');
+}
+async function negotiationSubmit(e){const f=e.target.closest('[data-neg-form]');if(!f)return;e.preventDefault();const d=new FormData(f),btn=f.querySelector('button');btn.disabled=true;btn.textContent='المفاوض يراجع...';const {error}=await db.functions.invoke('ai-negotiator',{body:{session_id:f.dataset.negForm,message:d.get('message'),share_with_other_party:d.get('share')==='yes'}});if(error){alert('المفاوض الذكي غير متاح حاليًا: '+error.message);btn.disabled=false;btn.textContent='إرسال للمفاوض';return;}await loadNegotiations();}
+async function approve(e){const b=e.target.closest('[data-approve]');if(!b)return;if(!confirm('هل توافق على كل الشروط النهائية؟ لا يكتمل الاتفاق إلا بموافقة العميل أيضًا.'))return;const {data,error}=await db.rpc('approve_negotiated_agreement',{p_agreement_id:b.dataset.approve});if(error){alert('تعذر تسجيل الموافقة: '+error.message);return;}alert(data==='agreed'?'تم الاتفاق النهائي بموافقة الطرفين.':'تم تسجيل موافقتك وننتظر موافقة العميل.');await loadNegotiations();}
+function renderProfile(){$('#profileList').innerHTML=orgs.map(o=>'<article class="card"><h3>'+esc(o.name)+'</h3><span class="pill">'+esc(typeNames[o.account_type]||o.account_type)+'</span><p>'+esc(o.description||'')+'</p><p class="muted">📍 '+esc(o.city||'')+'</p><p class="muted">التخصصات: '+esc((o.specialties||[]).join('، ')||'لم تحدد')+'</p><p class="muted">التوثيق: '+(o.is_verified?'موثّق':'لم يتم التوثيق بعد')+'</p></article>').join('');}
+$('#sendOtp').addEventListener('click',async()=>{if(!db){status('الاتصال غير متاح.',true);return;}const phone=phoneFormat($('#phone').value);if(!/^\+20\d{10}$/.test(phone)){status('اكتب رقمًا مصريًا صحيحًا.',true);return;}status('جارٍ إرسال رمز التحقق...');const {error}=await db.auth.signInWithOtp({phone});status(error?'تعذر إرسال الرمز: '+error.message:'تم طلب إرسال الرمز. افحص رسائل هاتفك.',!!error);});
+$('#verifyOtp').addEventListener('click',async()=>{const phone=phoneFormat($('#phone').value),token=$('#otp').value.trim();if(!token){status('أدخل رمز التحقق.',true);return;}const {data,error}=await db.auth.verifyOtp({phone,token,type:'sms'});if(error){status('تعذر التحقق: '+error.message,true);return;}user=data.user;await loadAll();});
+$('#signOut').addEventListener('click',async()=>{await db.auth.signOut();user=null;$('#workspace').classList.add('hidden');$('#authCard').classList.remove('hidden');status('تم تسجيل الخروج.');});
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);const offer=e.target.closest('[data-create-offer]');if(offer)createOffer(offer.dataset.createOffer);});
+$('#refreshMatches').addEventListener('click',loadMatches);$('#homeRefresh').addEventListener('click',loadMatches);$('#requestOrg').addEventListener('change',loadMatches);$('#homeOrg').addEventListener('change',loadMatches);$('#refreshOffers').addEventListener('click',loadOffers);$('#refreshNegotiations').addEventListener('click',loadNegotiations);$('#negotiationList').addEventListener('submit',negotiationSubmit);$('#negotiationList').addEventListener('click',approve);
+db?.auth.getSession().then(({data})=>{user=data.session?.user||null;if(user)loadAll();});
+db?.auth.onAuthStateChange((event,session)=>{user=session?.user||null;if(user)loadAll();else{$('#workspace').classList.add('hidden');$('#authCard').classList.remove('hidden');}});
+</script></body></html>
