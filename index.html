@@ -326,7 +326,7 @@ async function loadNegotiationWorkspace(){
   const req=(requests.data||[]).find(x=>x.id===session.request_id),thread=(msgs.data||[]).filter(x=>x.session_id===session.id),agreement=(agreements.data||[]).find(x=>x.session_id===session.id);
   const chat=thread.length?thread.map(m=>'<div class="item"><div><strong>'+({customer:'العميل',provider:'مقدم الخدمة',ai:'المفاوض الذكي',system:'النظام'}[m.sender_type]||'رسالة')+'</strong><p>'+esc(m.body)+'</p><span class="muted">'+dateLabel(m.created_at)+'</span></div></div>').join(''):'<p class="muted">ابدأ المحادثة مع المفاوض الذكي.</p>';
   const terms=agreement?'<div class="notice"><strong>الشروط المقترحة</strong><pre style="white-space:pre-wrap;direction:rtl;font-family:Tahoma">'+esc(JSON.stringify(agreement.final_terms,null,2))+'</pre><p class="muted">حالة الموافقة: '+esc(agreement.status==='agreed'?'اتفاق نهائي':agreement.status==='partially_approved'?'وافق طرف واحد':'بانتظار الموافقة')+'</p>'+(agreement.status!=='agreed'&&agreement.status!=='rejected'?'<button type="button" class="btn-light" data-approve-agreement="'+esc(agreement.id)+'">أوافق على الشروط النهائية</button>':'')+'</div>':'';
-  return '<article class="card"><div class="section-head"><strong>'+esc(req?.title||req?.request_type||'طلب خدمة')+'</strong><span class="pill">'+(statusLabels[session.status]||esc(session.status))+'</span></div><p class="muted">'+esc(req?.city||'')+'</p><div class="list">'+chat+'</div>'+terms+(session.status!=='agreed'&&session.status!=='cancelled'?'<form class="formgrid" data-negotiation-form="'+esc(session.id)+'" style="margin-top:12px"><div class="field full"><label>اكتب رسالتك للمفاوض الذكي</label><textarea name="message" required maxlength="4000" placeholder="مثال: السعر أعلى من ميزانيتي، هل يمكن الوصول لحل وسط؟"></textarea></div><div class="field full"><button type="submit">إرسال للمفاوض الذكي</button></div></form>':'')+'</article>';
+  return '<article class="card"><div class="section-head"><strong>'+esc(req?.title||req?.request_type||'طلب خدمة')+'</strong><span class="pill">'+(statusLabels[session.status]||esc(session.status))+'</span></div><p class="muted">'+esc(req?.city||'')+'</p><div class="list">'+chat+'</div>'+terms+(session.status!=='agreed'&&session.status!=='cancelled'?'<form class="formgrid" data-negotiation-form="'+esc(session.id)+'" style="margin-top:12px"><div class="field full"><label>اكتب رسالتك للمفاوض الذكي</label><textarea name="message" required maxlength="4000" placeholder="مثال: السعر أعلى من ميزانيتي، هل يمكن الوصول لحل وسط؟"></textarea><label class="muted"><input type="checkbox" name="share_with_other_party" value="true"> أسمح بمشاركة هذه الرسالة مع الطرف الآخر</label></div><div class="field full"><button type="submit">إرسال للمفاوض الذكي</button></div></form>':'')+'</article>';
  }).join('');
 }
 async function handleNegotiationAction(e){
@@ -335,8 +335,8 @@ async function handleNegotiationAction(e){
 }
 async function submitNegotiationMessage(e){
  const form=e.target.closest('[data-negotiation-form]');if(!form)return;e.preventDefault();
- const message=new FormData(form).get('message');const button=form.querySelector('button[type="submit"]');button.disabled=true;button.textContent='المفاوض يراجع الرسالة...';
- const {data,error}=await cloud.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message}});
+ const formValues=new FormData(form);const message=formValues.get('message');const share=formValues.get('share_with_other_party')==='true';const button=form.querySelector('button[type="submit"]');button.disabled=true;button.textContent='المفاوض يراجع الرسالة...';
+ const {data,error}=await cloud.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message,share_with_other_party:share}});
  if(error){alert('المفاوض الذكي غير متاح حاليًا: '+error.message);button.disabled=false;button.textContent='إرسال للمفاوض الذكي';return;}
  await loadNegotiationWorkspace();
 }
