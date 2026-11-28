@@ -246,7 +246,7 @@ $('#executiveDashboard')?.addEventListener('click',async e=>{
  const {data,error}=await cloud.rpc('claim_platform_admin',{p_code:code});
  if(error){$('#ownerClaimStatus').textContent='لم يتم التفعيل: '+error.message;b.disabled=false;b.textContent='تفعيل حساب المالك';return;}
  $('#ownerClaimStatus').textContent='تم تفعيل حساب المالك بنجاح. جارٍ تحميل لوحة القيادة...';
- await loadExecutiveDashboard();
+ await Promise.all([loadExecutiveDashboard(),loadFinanceDashboard(),loadPlatformSubscriptionDashboard()]);
 });
 
 
