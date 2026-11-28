@@ -56,6 +56,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var complete = e.target.closest('[data-complete-request]');
     if (complete) { if (!confirm('هل انتهت الخدمة بالفعل؟ سيتم فتح التقييم بعد التأكيد.')) return; var c = await db.from('service_requests').update({status:'completed',updated_at:new Date().toISOString()}).eq('id', complete.dataset.completeRequest); if (c.error) { alert('تعذر إكمال الطلب: ' + c.error.message); return; } await loadWorkspace(); }
   }
+  async function submitNegotiation(e) {
+    var form=e.target.closest('[data-negotiation-form]'); if(!form)return; e.preventDefault();
+    var message=new FormData(form).get('message'); var button=form.querySelector('button');
+    button.disabled=true; button.textContent='المفاوض يراجع...';
+    var result=await db.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message:message}});
+    if(result.error){alert('المفاوض الذكي غير متاح حاليًا: '+result.error.message);button.disabled=false;button.textContent='إرسال';return;}
+    await loadWorkspace();
+  }
   async function submitReview(e) {
     var form = e.target.closest('[data-review-form]'); if (!form) return; e.preventDefault();
     var d = new FormData(form); var result = await db.from('provider_reviews').insert({request_id:form.dataset.reviewForm,provider_organization_id:form.dataset.provider,reviewer_user_id:user.id,rating:Number(d.get('rating')),review_text:String(d.get('review_text') || '').trim(),is_approved:false});
