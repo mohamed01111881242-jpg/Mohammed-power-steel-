@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var workspace = document.getElementById('customerWorkspace');
   var host = document.getElementById('customerRequests');
   var status = document.getElementById('customerWorkspaceStatus');
-  function escCustomer(v) { return String(v == null ? '' : v).replace(/[&<>\"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]; }); }
-  function phoneDigits(v) { return String(v || '').replace(/\\D/g, ''); }
+  function escCustomer(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&#39;'); }
+  function phoneDigits(v) { return String(v || '').replace(/\D/g, ''); }
   async function loadWorkspace() {
     if (!user) { workspace.classList.add('hidden'); return; }
     workspace.classList.remove('hidden'); status.textContent = 'جارٍ تحميل طلباتك والعروض...';
