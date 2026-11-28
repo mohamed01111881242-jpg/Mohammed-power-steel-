@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var session=(sessions||[]).find(function(x){return x.offer_id===o.id;});
         var thread=session?(messageResult.data||[]).filter(function(x){return x.session_id===session.id;}):[];
         var agreement=session?(agreementResult.data||[]).find(function(x){return x.session_id===session.id;}):null;
-        var negotiation= session ? '<div class=\"notice\"><strong>المفاوض الذكي</strong><p class=\"muted\">'+(thread.length?thread.map(function(m){return '<p><b>'+({customer:'العميل',provider:'مقدم الخدمة',ai:'المفاوض الذكي',system:'النظام'}[m.sender_type]||'رسالة')+':</b> '+escCustomer(m.body)+'</p>';}).join(''):'ابدأ التفاوض على السعر والمواصفات والمدة.')+'</p>'+(agreement?'<p>الشروط المقترحة: '+escCustomer(JSON.stringify(agreement.final_terms))+'</p><p>حالة الاتفاق: '+escCustomer(agreement.status)+'</p>'+(agreement.status!=='agreed'&&agreement.status!=='rejected'?'<button type=\"button\" class=\"light\" data-approve-agreement=\"'+escCustomer(agreement.id)+'\">أوافق على الشروط النهائية</button>':''):'')+(session.status!=='agreed'&&session.status!=='cancelled'?'<form data-negotiation-form=\"'+escCustomer(session.id)+'\"><input name=\"message\" required maxlength=\"4000\" placeholder=\"اكتب للمفاوض الذكي...\"><button type=\"submit\">إرسال</button></form>':'')+'</div>' : '';
+        var negotiation= session ? '<div class=\"notice\"><strong>المفاوض الذكي</strong><p class=\"muted\">'+(thread.length?thread.map(function(m){return '<p><b>'+({customer:'العميل',provider:'مقدم الخدمة',ai:'المفاوض الذكي',system:'النظام'}[m.sender_type]||'رسالة')+':</b> '+escCustomer(m.body)+'</p>';}).join(''):'ابدأ التفاوض على السعر والمواصفات والمدة.')+'</p>'+(agreement?'<p>الشروط المقترحة: '+escCustomer(JSON.stringify(agreement.final_terms))+'</p><p>حالة الاتفاق: '+escCustomer(agreement.status)+'</p>'+(agreement.status!=='agreed'&&agreement.status!=='rejected'?'<button type=\"button\" class=\"light\" data-approve-agreement=\"'+escCustomer(agreement.id)+'\">أوافق على الشروط النهائية</button>':''):'')+(session.status!=='agreed'&&session.status!=='cancelled'?'<form data-negotiation-form=\"'+escCustomer(session.id)+'\"><input name=\"message\" required maxlength=\"4000\" placeholder=\"اكتب للمفاوض الذكي...\"><label class=\"muted\"><input type=\"checkbox\" name=\"share_with_other_party\" value=\"true\"> أسمح بمشاركة هذه الرسالة مع الطرف الآخر</label><button type=\"submit\">إرسال</button></form>':'')+'</div>' : '';
         var contact = provider.whatsapp_phone || provider.phone;
         var link = contact ? '<a target=\"_blank\" rel=\"noopener\" href=\"https://wa.me/' + phoneDigits(contact) + '\">تواصل واتساب</a>' : '';
         var accept = o.status === 'submitted' && r.status === 'open' ? '<button type=\"button\" class=\"light\" data-accept-offer=\"' + escCustomer(o.id) + '\">اقبل العرض</button>' : '';
@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   async function submitNegotiation(e) {
     var form=e.target.closest('[data-negotiation-form]'); if(!form)return; e.preventDefault();
-    var message=new FormData(form).get('message'); var button=form.querySelector('button');
+    var formValues=new FormData(form); var message=formValues.get('message'); var share=formValues.get('share_with_other_party')==='true'; var button=form.querySelector('button');
     button.disabled=true; button.textContent='المفاوض يراجع...';
-    var result=await db.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message:message}});
+    var result=await db.functions.invoke('ai-negotiator',{body:{session_id:form.dataset.negotiationForm,message:message,share_with_other_party:share}});
     if(result.error){alert('المفاوض الذكي غير متاح حاليًا: '+result.error.message);button.disabled=false;button.textContent='إرسال';return;}
     await loadWorkspace();
   }
